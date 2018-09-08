@@ -133,7 +133,7 @@ $(PROGRAM_FILE): $(OBJ)
 #   These should be inserted by 
 #   hand for tuning of dependencies.
 #---------------------------------------
-# include makefile_explicit_dependencies
+include makefile_explicit_dependencies
 
 #---------------------
 #   Explicit target.
