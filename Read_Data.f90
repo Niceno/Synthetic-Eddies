@@ -16,7 +16,7 @@
   write(*,*) '#=================================='
   write(*,*) '# Reading process started ...'
 
-  file_name = 'input_slice_tmp.plt'
+  file_name = 'input_slice_tmp.dat'
 
   open(100, file=file_name, form='formatted', status='old')
   read(100,*) header

@@ -19,7 +19,7 @@
   !-------------------------!
   !   Outputs for u slice   !
   !-------------------------!
-  ! file_name = 'output_u_ins.plt'
+  ! file_name = 'output_u_ins.dat'
   !
   ! open(100,file=file_name,form='formatted',position='append')
   ! write(100,*) 'variables = z,y,u_ins,v_ins,w_ins'
@@ -40,7 +40,7 @@
   !---------------------------------!
   !   Outputs for u mean profiles   !
   !---------------------------------!
-  file_name = 'output_mean_profiles.plt'
+  file_name = 'output_mean_profiles.dat'
 
   if ( int(time/dt) == n_dt) then
     open(100,file=file_name, form='formatted', position='append')
@@ -66,7 +66,7 @@
   !------------------------------------------!
   !   Outputs for reynolds stress profiles   !
   !------------------------------------------!
-  file_name = 'output_rms_profiles.plt'
+  file_name = 'output_rms_profiles.dat'
 
   if ( int(time/dt) == n_dt) then
     open(100,file=file_name,form='formatted',position='append')
@@ -103,7 +103,7 @@
   !----------------------------------------------------------------!
   !                   outputs for eddy posoitions                  !
   !----------------------------------------------------------------!
-  ! file_name = 'output_eddy_pos.plt'
+  ! file_name = 'output_eddy_pos.dat'
   !
   ! open(100,file=file_name,form='formatted',position='append')
   ! write(100,*) 'variables = x,y,z'
