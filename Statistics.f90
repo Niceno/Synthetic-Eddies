@@ -24,23 +24,23 @@
       u_tmp(3,j) = u_tmp(3,j) + w % com(j,k)
       u_tmp(4,j) = u_tmp(4,j) + t % com(j,k)
 
-      rms_tmp(1,j) = rms_tmp(1,j) + (u % com(j,k) - u % pro(j,k))**2
-      rms_tmp(2,j) = rms_tmp(2,j) + (v % com(j,k) - v % pro(j,k))**2
-      rms_tmp(3,j) = rms_tmp(3,j) + (w % com(j,k) - w % pro(j,k))**2
-      rms_tmp(4,j) = rms_tmp(4,j) + (t % com(j,k) - t % pro(j,k))**2
+      rms_tmp(1,j) = rms_tmp(1,j) + (u % com(j,k) - prof % u(j))**2
+      rms_tmp(2,j) = rms_tmp(2,j) + (v % com(j,k) - prof % v(j))**2
+      rms_tmp(3,j) = rms_tmp(3,j) + (w % com(j,k) - prof % w(j))**2
+      rms_tmp(4,j) = rms_tmp(4,j) + (t % com(j,k) - prof % t(j))**2
 
       rms_tmp(5,j) = rms_tmp(5,j)                   &
-                   + (u % com(j,k) - u % pro(j,k))  &
-                   * (v % com(j,k) - v % pro(j,k))
+                   + (u % com(j,k) - prof % u(j))  &
+                   * (v % com(j,k) - prof % v(j))
       rms_tmp(6,j) = rms_tmp(6,j)                   &
-                   + (u % com(j,k) - u % pro(j,k))  &
-                   * (t % com(j,k) - t % pro(j,k))
+                   + (u % com(j,k) - prof % u(j))  &
+                   * (t % com(j,k) - prof % t(j))
       rms_tmp(7,j) = rms_tmp(7,j)                   &
-                   + (v % com(j,k) - v % pro(j,k))  &
-                   * (t % com(j,k) - t % pro(j,k))
+                   + (v % com(j,k) - prof % v(j))  &
+                   * (t % com(j,k) - prof % t(j))
       rms_tmp(8,j) = rms_tmp(8,j)                   &
-                   + (w % com(j,k) - w % pro(j,k))  &
-                   * (t % com(j,k) - t % pro(j,k))
+                   + (w % com(j,k) - prof % w(j))  &
+                   * (t % com(j,k) - prof % t(j))
     end do
 
     u_tmp(1:4,j) = u_tmp(1:4,j)/mesh % nz

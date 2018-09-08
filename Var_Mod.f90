@@ -13,7 +13,6 @@
 
     type(Mesh_Type), pointer :: pnt_mesh  ! grid for which it is defined
 
-    real, allocatable :: pro(:,:)         ! from the DNS profile
     real, allocatable :: raw(:,:)         ! raw
     real, allocatable :: com(:,:)         ! combined
   end type

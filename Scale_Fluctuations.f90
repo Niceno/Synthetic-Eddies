@@ -25,15 +25,13 @@
       u_mean(1:4,1)  = 0.0
       u_tmp(1:4,1)   = 0.0
 
-      u_mean(1:4,1) = (/ u % pro(j,k), v % pro(j,k), w % pro(j,k),  &
-                         t % pro(j,k) /)
-      u_tmp(1:4,1)  = (/ u % raw(j,k), v % raw(j,k), w % raw(j,k),  &
-                         t % raw(j,k)/)
+      u_mean(1:4,1) = (/ prof % u(j),  prof % v(j),  prof % w(j),  prof % t(j)  /)
+      u_tmp(1:4,1)  = (/ u % raw(j,k), v % raw(j,k), w % raw(j,k), t % raw(j,k) /)
 
-      r_loc(1,1:4)  = (/ rs(1,j,k), rs(4,j,k), rs(5,j,k), ths(2,j,k) /)
-      r_loc(2,1:4)  = (/ rs(4,j,k), rs(2,j,k), rs(6,j,k), ths(3,j,k) /)
-      r_loc(3,1:4)  = (/ rs(5,j,k), rs(6,j,k), rs(3,j,k), ths(4,j,k) /)
-      r_loc(4,1:4)  = (/ths(2,j,k),ths(3,j,k),ths(4,j,k), ths(1,j,k) /)
+      r_loc(1,1:4)  = (/ prof % rs(1,j), prof % rs(4,j), prof % rs(5,j), prof % ts(2,j) /)
+      r_loc(2,1:4)  = (/ prof % rs(4,j), prof % rs(2,j), prof % rs(6,j), prof % ts(3,j) /)
+      r_loc(3,1:4)  = (/ prof % rs(5,j), prof % rs(6,j), prof % rs(3,j), prof % ts(4,j) /)
+      r_loc(4,1:4)  = (/ prof % ts(2,j), prof % ts(3,j), prof % ts(4,j), prof % ts(1,j) /)
 
       call Cholesky(a,r_loc,4)
       call Mat_Mul(a,u_tmp,u_fluc,4,1,4)

@@ -27,10 +27,10 @@
 
     do j = 1,mesh % ny
       do k = 1,mesh % nz
-        u_mean(1,j) = u_mean(1,j) + u % pro(j,k)
-        u_mean(2,j) = u_mean(2,j) + v % pro(j,k)
-        u_mean(3,j) = u_mean(3,j) + w % pro(j,k)
-        u_mean(4,j) = u_mean(4,j) + t % pro(j,k)
+        u_mean(1,j) = u_mean(1,j) + prof % u(j)
+        u_mean(2,j) = u_mean(2,j) + prof % v(j)
+        u_mean(3,j) = u_mean(3,j) + prof % w(j)
+        u_mean(4,j) = u_mean(4,j) + prof % t(j)
       end do
       u_mean(1:4,j) = u_mean(1:4,j)/mesh % nz
       write(100,"(9f15.9)") mesh % y(j), u_pr(1,j), u_mean(1,j),         &
@@ -55,15 +55,15 @@
 
     do j = 1,mesh % ny
       do k = 1,mesh % nz
-        rms_mean(1,j) = rms_mean(1,j) + rs(1,j,k)
-        rms_mean(2,j) = rms_mean(2,j) + rs(2,j,k)
-        rms_mean(3,j) = rms_mean(3,j) + rs(3,j,k)
-        rms_mean(4,j) = rms_mean(4,j) + ths(1,j,k)
+        rms_mean(1,j) = rms_mean(1,j) + prof % rs(1,j)
+        rms_mean(2,j) = rms_mean(2,j) + prof % rs(2,j)
+        rms_mean(3,j) = rms_mean(3,j) + prof % rs(3,j)
+        rms_mean(4,j) = rms_mean(4,j) + prof % ts(1,j)
 
-        rms_mean(5,j) = rms_mean(5,j) + rs(4,j,k)
-        rms_mean(6,j) = rms_mean(6,j) + ths(2,j,k)
-        rms_mean(7,j) = rms_mean(7,j) + ths(3,j,k)
-        rms_mean(8,j) = rms_mean(8,j) + ths(4,j,k)
+        rms_mean(5,j) = rms_mean(5,j) + prof % rs(4,j)
+        rms_mean(6,j) = rms_mean(6,j) + prof % ts(2,j)
+        rms_mean(7,j) = rms_mean(7,j) + prof % ts(3,j)
+        rms_mean(8,j) = rms_mean(8,j) + prof % ts(4,j)
       end do
       rms_mean(1:8,j) = rms_mean(1:8,j)/mesh % nz
       write(100,"(17f15.9)") mesh % y(j), rms_pr(1,j), rms_mean(1,j),     &

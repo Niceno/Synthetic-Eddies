@@ -6,6 +6,7 @@
 !----------------------------------[Modules]-----------------------------------!
   use Mesh_Mod
   use Eddy_Mod
+  use Prof_Mod
   use Var_Mod
 !------------------------------------------------------------------------------!
   implicit none
@@ -15,12 +16,14 @@
   real    :: dt, sigma, v_b, time, eps
 
   real, allocatable :: u_pr(:,:), rms_pr(:,:), u_c(:,:)
-  real, allocatable :: rs(:,:,:), ths(:,:,:)
 
   type(Eddy_Type), allocatable :: eddy(:)
+
+  type(Prof_Type) :: prof
+
   type(Mesh_Type) :: mesh
 
-  type(Var_Type) :: u, v, w, t
+  type(Var_Type)  :: u, v, w, t
 
   contains
 

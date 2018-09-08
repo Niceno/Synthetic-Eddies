@@ -39,8 +39,8 @@
   call Var_Mod_Allocate(w, mesh)
   call Var_Mod_Allocate(t, mesh)
 
-  allocate( rs  (6,mesh % ny, mesh % nz) )
-  allocate( ths (4,mesh % ny, mesh % nz) )
+  call Prof_Mod_Allocate(prof, mesh % ny)
+
   allocate( u_c   (mesh % ny, mesh % nz) )
   allocate( eddy(1:n_eddies),  &
             u_pr(4,1:mesh % ny),   &
@@ -49,10 +49,6 @@
   !------------------------!
   !   Initial conditions   !
   !------------------------!
-
-  rs (1:6,:,:) = 0.0
-  ths(1:4,:,:) = 0.0
-
   u_c(:,:)   = 0.0
   u_pr  (1:4,:)   = 0.0
   rms_pr(1:8,:) = 0.0

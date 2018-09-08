@@ -25,28 +25,34 @@
   !-------------------------------------!
   !   Main loop of reading slice data   !
   !-------------------------------------!
-  do j = 1, mesh % ny
-    do k = 1, mesh % nz
-      read(100,*) tmp_z, tmp_y,                                             &
-                  u % pro(j,k), v % pro(j,k), w % pro(j,k), t % pro(j,k),   &
-                  rs(1,j,k), rs(2,j,k), rs(3,j,k), rs(4,j,k),               &
-                  rs(5,j,k), rs(6,j,k),                                     &
-                  ths(1,j,k), ths(2,j,k), ths(3,j,k), ths(4,j,k)
-
-      ! Hmm ... why on earth this twist?
-      if (k==1) mesh % y(j) = tmp_y
-      if (j==1) mesh % z(k) = tmp_z
-    end do
+  do j = 1, prof % n_points
+    read(100,*) prof % y(j),     &
+                prof % u(j),     &
+                prof % v(j),     &
+                prof % w(j),     &
+                prof % t(j),     &
+                prof % rs(1,j),  &
+                prof % rs(2,j),  &
+                prof % rs(3,j),  &
+                prof % rs(4,j),  &
+                prof % rs(5,j),  &
+                prof % rs(6,j),  &
+                prof % ts(1,j),  &
+                prof % ts(2,j),  &
+                prof % ts(3,j),  &
+                prof % ts(4,j)
   end do
 
   close(100)
 
-  ! Surface
+  ! Surface area
   y_s = minval(mesh % y(:))
   y_e = maxval(mesh % y(:))
   z_s = minval(mesh % z(:))
   z_e = maxval(mesh % z(:))
   s = (y_e - y_s) * (z_e - z_s)
+
+  ! Some kind of volume ... boundary volume?
   v_b = s * 2 * sigma
 
   write(*,*) '# ... reading process is completed'

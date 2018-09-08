@@ -13,11 +13,9 @@
   phi % pnt_mesh => mesh
 
   allocate (phi % com(mesh % ny, mesh % nz))
-  allocate (phi % pro(mesh % ny, mesh % nz))
   allocate (phi % raw(mesh % ny, mesh % nz))
 
   phi % com(:,:) = 0.0
-  phi % pro(:,:) = 0.0
   phi % raw(:,:) = 0.0
 
   end subroutine
