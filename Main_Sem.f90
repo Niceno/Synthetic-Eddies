@@ -14,7 +14,7 @@
 !==============================================================================!
 
   call Setup()
-  call Read_Data()
+  call Read_Profiles()
   call Eddy_Setting()
 
   do ts = 1, n_dt
@@ -22,7 +22,7 @@
     time = ts * dt
 
     call Generate_Fluctuations(ts)
-    call Combine_Slice(ts)
+    call Scale_Fluctuations(ts)
     call Convect_Eddy()
     call Statistics()
 

@@ -19,11 +19,11 @@
   write(*,*) '#=================================='
   write(*,*) '# Eddy setting process started ... '
 
-  y_s = y(1)  - sigma
-  y_e = y(ny) + sigma
-
-  z_s = z(1)  - sigma
-  z_e = z(nz) + sigma
+  ! Determin the bounding box for the eddies
+  y_s = minval(mesh % y(:))  - sigma
+  y_e = maxval(mesh % y(:))  + sigma
+  z_s = minval(mesh % z(:))  - sigma
+  z_e = maxval(mesh % z(:))  + sigma
 
   call random_number(int_x)
   call random_number(int_y)

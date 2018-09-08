@@ -12,77 +12,50 @@
   !   Constants for sem   !
   !-----------------------!
   n_eddies = 1024
-  ny       =   96
-  nz       =  256
 
   n_dt  = 6000
   dt    = 5e-3
   sigma = 0.20
 
-  out_num = 100
+  out_num = 50
 
   eps = 1e-8
 
   !------------------------!
   !   Allocate variables   !
   !------------------------!
-  allocate( y     (ny)    )
-  allocate( z        (nz) )
-  allocate( u     (ny,nz) )
-  allocate( v     (ny,nz) )
-  allocate( w     (ny,nz) )
-  allocate( t     (ny,nz) )
-  allocate( u_in  (ny,nz) )
-  allocate( v_in  (ny,nz) )
-  allocate( w_in  (ny,nz) )
-  allocate( u_comb(ny,nz) )
-  allocate( v_comb(ny,nz) )
-  allocate( w_comb(ny,nz) )
-  allocate( t_in  (ny,nz) )
-  allocate( t_comb(ny,nz) )
-  allocate( rs  (6,ny,nz) )
-  allocate( ths (4,ny,nz) )
-  allocate( u_c   (ny,nz) )
+  mesh % ny       =   96
+  mesh % nz       =  256
+  mesh % n_nodes  =  mesh % ny * mesh % nz
+  mesh % n_cells  = (mesh % ny - 1)  &
+                  * (mesh % nz - 1)
+  allocate(mesh % y(mesh % ny))
+  allocate(mesh % z(mesh % nz))
+  mesh % y(:) = 0.0
+  mesh % z(:) = 0.0
+
+  call Var_Mod_Allocate(u, mesh)
+  call Var_Mod_Allocate(v, mesh)
+  call Var_Mod_Allocate(w, mesh)
+  call Var_Mod_Allocate(t, mesh)
+
+  allocate( rs  (6,mesh % ny, mesh % nz) )
+  allocate( ths (4,mesh % ny, mesh % nz) )
+  allocate( u_c   (mesh % ny, mesh % nz) )
   allocate( eddy(1:n_eddies),  &
-            u_pr(4,1:ny),   &
-            rms_pr(8,1:ny) )
-!@allocate(u3d_comb(n_dt, ny, nz))
-!@allocate(v3d_comb(n_dt, ny, nz))
-!@allocate(w3d_comb(n_dt, ny, nz))
-!@allocate(t3d_comb(n_dt, ny, nz))
+            u_pr(4,1:mesh % ny),   &
+            rms_pr(8,1:mesh % ny) )
 
   !------------------------!
   !   Initial conditions   !
   !------------------------!
-  y(:) = 0.0
-  z(:) = 0.0
-
-  u(:,:) = 0.0
-  v(:,:) = 0.0
-  w(:,:) = 0.0
-  t(:,:) = 0.0
 
   rs (1:6,:,:) = 0.0
   ths(1:4,:,:) = 0.0
 
-  u_in(:,:) = 0.0
-  v_in(:,:) = 0.0
-  w_in(:,:) = 0.0
-  t_in(:,:) = 0.0
-
-  u_comb(:,:) = 0.0
-  v_comb(:,:) = 0.0
-  w_comb(:,:) = 0.0
-  t_comb(:,:) = 0.0
-
-!@u3d_comb(:,:,:) = 0.0
-!@v3d_comb(:,:,:) = 0.0
-!@w3d_comb(:,:,:) = 0.0
-!@t3d_comb(:,:,:) = 0.0
-
-  u_c(1:ny,1:nz)   = 0.0
-  u_pr(1:4,1:ny)   = 0.0
-  rms_pr(1:8,1:ny) = 0.0
+  u_c(:,:)   = 0.0
+  u_pr  (1:4,:)   = 0.0
+  rms_pr(1:8,:) = 0.0
 
   eddy(:) % num = 0
   eddy(:) % len   = 0.0

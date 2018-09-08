@@ -4,6 +4,7 @@
 !   Convect each eddies by convective velocity                                 !
 !------------------------------------------------------------------------------!
 !----------------------------------[Modules]-----------------------------------!
+  use Mesh_Mod
   use Sem_Mod
 !------------------------------------------------------------------------------!
   implicit none
@@ -13,15 +14,15 @@
   real    :: tmp(1:6)
 !==============================================================================!
 
-  y_s = y(1) - sigma
-  y_e   = y(ny) + sigma
+  ! Determin the bounding box for the eddies
+  y_s = minval(mesh % y(:))  - sigma
+  y_e = maxval(mesh % y(:))  + sigma
+  z_s = minval(mesh % z(:))  - sigma
+  z_e = maxval(mesh % z(:))  + sigma
 
-  z_s = z(1) - sigma
-  z_e   = z(nz) + sigma
-
-  u_conv = sum(u_comb)/(ny*nz)
-  v_conv = sum(v_comb)/(ny*nz)
-  w_conv = sum(w_comb)/(ny*nz)
+  u_conv = sum(u % com) / (mesh % ny * mesh % nz)
+  v_conv = sum(v % com) / (mesh % ny * mesh % nz)
+  w_conv = sum(w % com) / (mesh % ny * mesh % nz)
 
   do e = 1, n_eddies
     eddy(e) % x = eddy(e) % x + u_conv * dt
