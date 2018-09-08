@@ -1,5 +1,5 @@
 !==============================================================================!
-  subroutine Write_Data
+  subroutine Write_Statistics()
 !------------------------------------------------------------------------------!
 !   Write each variables in the result folder.                                 !
 !------------------------------------------------------------------------------!
@@ -15,27 +15,6 @@
 
   u_mean(1:4,1:mesh % ny)   = 0.0
   rms_mean(1:8,1:mesh % ny) = 0.0
-
-  !-------------------------!
-  !   Outputs for u slice   !
-  !-------------------------!
-  ! file_name = 'output_u_ins.dat'
-  !
-  ! open(100,file=file_name,form='formatted',position='append')
-  ! write(100,*) 'variables = z,y,u_ins,v_ins,w_ins'
-  ! write(100,"(2(a,i3,2x))")' zone  i = ',mesh % nz,' J = ',mesh % ny
-  ! write(100,*) 'solutiontime =',time
-  !
-  ! do j = 1,mesh % ny
-  !   do k = 1,mesh % nz
-  !
-  !       write(100,"(5f15.9)") z(k),y(j),                            &
-  !                             u_comb(j,k),v_comb(j,k),w_comb(j,k)
-  !
-  !   end do
-  ! end do
-  ! write(100,*)
-  ! close(100)
 
   !---------------------------------!
   !   Outputs for u mean profiles   !
@@ -99,22 +78,5 @@
     write(100,*)
     close(100)
   end if
-
-  !----------------------------------------------------------------!
-  !                   outputs for eddy posoitions                  !
-  !----------------------------------------------------------------!
-  ! file_name = 'output_eddy_pos.dat'
-  !
-  ! open(100,file=file_name,form='formatted',position='append')
-  ! write(100,*) 'variables = x,y,z'
-  ! write(100,*) 'zone'
-  ! write(100,*) 'solutiontime =',time
-  !
-  ! do it = 1,n
-  !   write(100,*) sem_eddy(it)%x_pos*10,sem_eddy(it)%y_pos,          &
-  !                sem_eddy(it)%z_pos
-  ! end do
-  ! write(100,*)
-  ! close(100)
 
   end subroutine

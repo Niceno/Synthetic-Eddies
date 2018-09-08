@@ -22,13 +22,13 @@
     time = ts * dt
 
     call Generate_Fluctuations(ts)
-    call Scale_Fluctuations(ts)
+    call Scale_Fluctuations   (ts)
     call Convect_Eddy()
-    call Statistics()
+    call Statistics           (ts)
 
     write(*,'(a,i5,a)') ' # Sem for',ts,'iteration'
 
-    if( mod(ts,out_num) == 0 ) call Write_Data()
+    if( mod(ts,out_num) == 0 ) call Write_Statistics()
   end do
 
   end program

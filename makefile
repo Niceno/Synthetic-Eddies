@@ -88,7 +88,7 @@ SRC_FUN = Convect_Eddy.f90		\
           Scale_Fluctuations.f90	\
           Setup.f90			\
           Statistics.f90		\
-          Write_Data.f90
+          Write_Statistics.f90
 
 #----------------------------------------------------------------------
 #   List of objects generated from the list of modules and functions  
