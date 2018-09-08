@@ -1,3 +1,8 @@
+#-- ./Write_Statistics.f90
+$(DIR_OBJECT)/Write_Statistics.o:\
+$(DIR_OBJECT)/Sem_Mod.o \
+Sem_Mod/*.f90 
+
 #-- ./Statistics.f90
 $(DIR_OBJECT)/Statistics.o:\
 $(DIR_OBJECT)/Sem_Mod.o \
@@ -6,6 +11,11 @@ Sem_Mod/*.f90
 #-- ./Sem_Mod/Mat_Mul.f90
 #-- ./Sem_Mod/Intensity_Det.f90
 #-- ./Sem_Mod/Cholesky.f90
+#-- ./Prof_Mod.f90
+$(DIR_OBJECT)/Prof_Mod.o:\
+Prof_Mod/*.f90 \
+$(DIR_OBJECT)/Mesh_Mod.o 
+
 #-- ./Scale_Fluctuations.f90
 $(DIR_OBJECT)/Scale_Fluctuations.o:\
 $(DIR_OBJECT)/Sem_Mod.o \
@@ -17,6 +27,8 @@ $(DIR_OBJECT)/Sem_Mod.o:\
 $(DIR_OBJECT)/Var_Mod.o \
 Var_Mod/*.f90 \
 Sem_Mod/*.f90 \
+$(DIR_OBJECT)/Prof_Mod.o \
+Prof_Mod/*.f90 \
 $(DIR_OBJECT)/Mesh_Mod.o \
 $(DIR_OBJECT)/Eddy_Mod.o 
 
@@ -25,13 +37,9 @@ $(DIR_OBJECT)/Main_Sem.o:\
 $(DIR_OBJECT)/Sem_Mod.o \
 Sem_Mod/*.f90 
 
+#-- ./Prof_Mod/Allocate.f90
 #-- ./Eddy_Setting.f90
 $(DIR_OBJECT)/Eddy_Setting.o:\
-$(DIR_OBJECT)/Sem_Mod.o \
-Sem_Mod/*.f90 
-
-#-- ./Write_Data.f90
-$(DIR_OBJECT)/Write_Data.o:\
 $(DIR_OBJECT)/Sem_Mod.o \
 Sem_Mod/*.f90 
 
