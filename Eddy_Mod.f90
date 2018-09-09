@@ -27,6 +27,6 @@
 
   contains
 
-  include 'Eddy_Mod/Allocate.f90'
+  include 'Eddy_Mod/Create.f90'
 
   end module

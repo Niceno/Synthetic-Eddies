@@ -1,7 +1,7 @@
 !==============================================================================!
-  subroutine Prof_Mod_Allocate(pro, n)
+  subroutine Prof_Mod_Create(pro, n)
 !------------------------------------------------------------------------------!
-!   Allocate memory for a variable defined on the specific mesh                !
+!   Create memory for a variable defined on the specific mesh                !
 !------------------------------------------------------------------------------!
   implicit none
 !---------------------------------[Arguments]----------------------------------!

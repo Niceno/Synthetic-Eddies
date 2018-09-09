@@ -1,7 +1,7 @@
 !==============================================================================!
-  subroutine Var_Mod_Allocate(phi, mesh)
+  subroutine Var_Mod_Create(phi, mesh)
 !------------------------------------------------------------------------------!
-!   Allocate memory for a variable defined on the specific mesh                !
+!   Create memory for a variable defined on the specific mesh                !
 !------------------------------------------------------------------------------!
   implicit none
 !---------------------------------[Arguments]----------------------------------!
