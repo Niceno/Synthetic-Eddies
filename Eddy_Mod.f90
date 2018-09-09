@@ -13,6 +13,7 @@
   !---------------!
   type Eddy_Type
     integer :: n_eddies
+    real    :: sigma
 
     integer, allocatable :: num(:)    ! eddy specification number
     real,    allocatable :: len(:)    ! eddy length scale

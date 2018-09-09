@@ -1,64 +1,79 @@
 #-- ./Write_Statistics.f90
-$(DIR_OBJECT)/Write_Statistics.o:\
-$(DIR_OBJECT)/Sem_Mod.o \
-Sem_Mod/*.f90 
+$(DIR_OBJECT)/Write_Statistics.o:
 
+#-- ./Mat_Mul.f90
 #-- ./Eddy_Mod/Create.f90
 #-- ./Statistics.f90
 $(DIR_OBJECT)/Statistics.o:\
-$(DIR_OBJECT)/Sem_Mod.o \
-Sem_Mod/*.f90 
+$(DIR_OBJECT)/Prof_Mod.o \
+Prof_Mod/*.f90 \
+$(DIR_OBJECT)/Mesh_Mod.o \
+Mesh_Mod/*.f90 \
+$(DIR_OBJECT)/Flow_Mod.o \
+Flow_Mod/*.f90 
 
-#-- ./Sem_Mod/Mat_Mul.f90
-#-- ./Sem_Mod/Intensity_Det.f90
-#-- ./Sem_Mod/Cholesky.f90
 #-- ./Prof_Mod.f90
 $(DIR_OBJECT)/Prof_Mod.o:\
 Prof_Mod/*.f90 \
 $(DIR_OBJECT)/Mesh_Mod.o \
 Mesh_Mod/*.f90 
 
-#-- ./Scale_Fluctuations.f90
-$(DIR_OBJECT)/Scale_Fluctuations.o:\
-$(DIR_OBJECT)/Sem_Mod.o \
-Sem_Mod/*.f90 
-
-#-- ./Var_Mod/Create.f90
-#-- ./Mesh_Mod/Create_Cartesian.f90
-#-- ./.git/objects/7f/603a3e827ee48b143e9e931f900f7c6aa282dd
-#-- ./Initialize.f90
-$(DIR_OBJECT)/Initialize.o:\
-$(DIR_OBJECT)/Sem_Mod.o \
-Sem_Mod/*.f90 
-
-#-- ./Save_Vtk_4_Arrays.f90
-$(DIR_OBJECT)/Save_Vtk_4_Arrays.o:\
-$(DIR_OBJECT)/Sem_Mod.o \
-Sem_Mod/*.f90 
-
-#-- ./Meshes/Neu_2_Vtk.f90
-#-- ./Sem_Mod.f90
-$(DIR_OBJECT)/Sem_Mod.o:\
+#-- ./Flow_Mod.f90
+$(DIR_OBJECT)/Flow_Mod.o:\
 $(DIR_OBJECT)/Var_Mod.o \
 Var_Mod/*.f90 \
-Sem_Mod/*.f90 \
+$(DIR_OBJECT)/Mesh_Mod.o \
+Mesh_Mod/*.f90 \
+Flow_Mod/*.f90 
+
+#-- ./Flow_Mod/Create.f90
+$(DIR_OBJECT)/Create.o:\
+$(DIR_OBJECT)/Mesh_Mod.o \
+Mesh_Mod/*.f90 
+
+#-- ./Cholesky.f90
+#-- ./Scale_Fluctuations.f90
+$(DIR_OBJECT)/Scale_Fluctuations.o:\
 $(DIR_OBJECT)/Prof_Mod.o \
 Prof_Mod/*.f90 \
 $(DIR_OBJECT)/Mesh_Mod.o \
 Mesh_Mod/*.f90 \
+$(DIR_OBJECT)/Flow_Mod.o \
+Flow_Mod/*.f90 
+
+#-- ./Var_Mod/Create.f90
+#-- ./Mesh_Mod/Create_Cartesian.f90
+#-- ./Mesh_Mod/Create_From_File.f90
+#-- ./.git/objects/7f/603a3e827ee48b143e9e931f900f7c6aa282dd
+#-- ./Save_Vtk_4_Arrays.f90
+$(DIR_OBJECT)/Save_Vtk_4_Arrays.o:\
+$(DIR_OBJECT)/Mesh_Mod.o \
+Mesh_Mod/*.f90 
+
+#-- ./Meshes/Neu_2_Vtk.f90
+#-- ./Main_Sem.f90
+$(DIR_OBJECT)/Main_Sem.o:\
+$(DIR_OBJECT)/Prof_Mod.o \
+Prof_Mod/*.f90 \
+$(DIR_OBJECT)/Mesh_Mod.o \
+Mesh_Mod/*.f90 \
+$(DIR_OBJECT)/Flow_Mod.o \
+Flow_Mod/*.f90 \
 $(DIR_OBJECT)/Eddy_Mod.o \
 Eddy_Mod/*.f90 
 
-#-- ./Main_Sem.f90
-$(DIR_OBJECT)/Main_Sem.o:\
-$(DIR_OBJECT)/Sem_Mod.o \
-Sem_Mod/*.f90 
+#-- ./Prof_Mod/Read.f90
+$(DIR_OBJECT)/Read.o:\
+$(DIR_OBJECT)/Mesh_Mod.o \
+Mesh_Mod/*.f90 
 
 #-- ./Prof_Mod/Create.f90
 #-- ./Eddy_Setting.f90
 $(DIR_OBJECT)/Eddy_Setting.o:\
-$(DIR_OBJECT)/Sem_Mod.o \
-Sem_Mod/*.f90 
+$(DIR_OBJECT)/Mesh_Mod.o \
+Mesh_Mod/*.f90 \
+$(DIR_OBJECT)/Eddy_Mod.o \
+Eddy_Mod/*.f90 
 
 #-- ./Eddy_Mod.f90
 $(DIR_OBJECT)/Eddy_Mod.o:\
@@ -66,19 +81,21 @@ Eddy_Mod/*.f90
 
 #-- ./Convect_Eddy.f90
 $(DIR_OBJECT)/Convect_Eddy.o:\
-$(DIR_OBJECT)/Sem_Mod.o \
-Sem_Mod/*.f90 \
 $(DIR_OBJECT)/Mesh_Mod.o \
-Mesh_Mod/*.f90 
+Mesh_Mod/*.f90 \
+$(DIR_OBJECT)/Flow_Mod.o \
+Flow_Mod/*.f90 \
+$(DIR_OBJECT)/Eddy_Mod.o \
+Eddy_Mod/*.f90 
 
 #-- ./Mesh_Mod.f90
 $(DIR_OBJECT)/Mesh_Mod.o:\
 Mesh_Mod/*.f90 
 
-#-- ./Read_Inlet_Profiles.f90
-$(DIR_OBJECT)/Read_Inlet_Profiles.o:\
-$(DIR_OBJECT)/Sem_Mod.o \
-Sem_Mod/*.f90 
+#-- ./Save_Vtk_Mesh.f90
+$(DIR_OBJECT)/Save_Vtk_Mesh.o:\
+$(DIR_OBJECT)/Mesh_Mod.o \
+Mesh_Mod/*.f90 
 
 #-- ./Var_Mod.f90
 $(DIR_OBJECT)/Var_Mod.o:\
@@ -88,6 +105,10 @@ Mesh_Mod/*.f90
 
 #-- ./Generate_Fluctuations.f90
 $(DIR_OBJECT)/Generate_Fluctuations.o:\
-$(DIR_OBJECT)/Sem_Mod.o \
-Sem_Mod/*.f90 
+$(DIR_OBJECT)/Mesh_Mod.o \
+Mesh_Mod/*.f90 \
+$(DIR_OBJECT)/Flow_Mod.o \
+Flow_Mod/*.f90 \
+$(DIR_OBJECT)/Eddy_Mod.o \
+Eddy_Mod/*.f90 
 

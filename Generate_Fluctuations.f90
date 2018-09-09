@@ -1,68 +1,98 @@
 !==============================================================================!
-  subroutine Generate_Fluctuations(ts)
+  subroutine Generate_Fluctuations(ed, flw, ts)
 !------------------------------------------------------------------------------!
 !   Generate fluctuations without combining mean and rms data                  !
 !------------------------------------------------------------------------------!
-  use Sem_Mod
+!----------------------------------[Modules]-----------------------------------!
+  use Eddy_Mod, only: Eddy_Type
+  use Flow_Mod, only: Flow_Type
+  use Mesh_Mod, only: Mesh_Type, STRUCTURED, UNSTRUCTURED
 !------------------------------------------------------------------------------!
   implicit none
 !---------------------------------[Arguments]----------------------------------!
-  integer :: ts
+  type(Eddy_Type) :: ed
+  type(Flow_Type) :: flw
+  integer         :: ts
 !-----------------------------------[Locals]-----------------------------------!
-  integer           :: e, j, k
-  real              :: x0, y0, z0, f
-  character(len=80) :: file_name
+  integer                 :: e, j, k
+  real                    :: x0, y0, z0, f, v_b
+  real                    :: y_s, y_e, z_s, z_e, s
+  character(len=80)       :: file_name
+  type(Mesh_Type), target :: msh
 !==============================================================================!
 
-  u % raw(:,:) = 0.0
-  v % raw(:,:) = 0.0
-  w % raw(:,:) = 0.0
-  t % raw(:,:) = 0.0
+  ! Take mesh pointer
+  msh = flw % pnt_mesh
 
-  do k = 1, mesh % nz
-    do j = 1, mesh % ny
+  flw % u % raw(:,:) = 0.0
+  flw % v % raw(:,:) = 0.0
+  flw % w % raw(:,:) = 0.0
+  flw % t % raw(:,:) = 0.0
 
-      do e = 1, eddy % n_eddies
-        x0 = (0           - eddy % x(e)) / eddy % len(e)
-        y0 = (mesh % y(j) - eddy % y(e)) / eddy % len(e)
-        z0 = (mesh % z(k) - eddy % z(e)) / eddy % len(e)
+  ! Surface area ...
+  if(msh % mode .eq. STRUCTURED) then
+    y_s = minval(msh % yn(:))
+    y_e = maxval(msh % yn(:))
+    z_s = minval(msh % zn(:))
+    z_e = maxval(msh % zn(:))
+    s = (y_e - y_s) * (z_e - z_s)
+  end if
 
-        !--------------------!
-        !   Shape function   !
-        !--------------------!
-        if ( abs(x0) <=1 .and. abs(y0) <=1 .and. abs(z0) <=1) then
-          f = sqrt(1.5) * (1- abs(x0)) *                        &
-              sqrt(1.5) * (1- abs(y0)) *                        &
-              sqrt(1.5) * (1- abs(z0))
+  ! ... and some kind of volume ... boundary volume?
+  v_b = s * 2 * ed % sigma
 
-          u % raw(j,k) = u % raw(j,k) +                         &
-                         sqrt(v_b/eddy % len(e)**3) *           &
-                         eddy % x_int(e)*f
+  if(msh % mode == STRUCTURED) then
+    do k = 1, msh % nz
+      do j = 1, msh % ny
 
-          v % raw(j,k) = v % raw(j,k) +                         &
-                        sqrt(v_b/eddy % len(e)**3) *            &
-                        eddy % y_int(e)*f
+        do e = 1, ed % n_eddies
+          x0 = (0           - ed % x(e)) / ed % len(e)
+          y0 = (msh % yn(j) - ed % y(e)) / ed % len(e)  ! <--= yn
+          z0 = (msh % zn(k) - ed % z(e)) / ed % len(e)  ! <-== zn
 
-          w % raw(j,k) = w % raw(j,k) +                         &
-                        sqrt(v_b/eddy % len(e)**3) *            &
-                        eddy % z_int(e)*f
+          !--------------------!
+          !   Shape function   !
+          !--------------------!
+          if ( abs(x0) <=1 .and. abs(y0) <=1 .and. abs(z0) <=1) then
+            f = sqrt(1.5) * (1- abs(x0)) *                        &
+                sqrt(1.5) * (1- abs(y0)) *                        &
+                sqrt(1.5) * (1- abs(z0))
 
-          t % raw(j,k) = t % raw(j,k) +                         &
-                        sqrt(v_b/eddy % len(e)**3) *            &
-                        eddy % t_int(e)*f
-        end if
+            flw % u % raw(j,k) = flw % u % raw(j,k) +             &
+                           sqrt(v_b/ed % len(e)**3) *             &
+                           ed % x_int(e)*f
+
+            flw % v % raw(j,k) = flw % v % raw(j,k) +             &
+                          sqrt(v_b/ed % len(e)**3) *              &
+                          ed % y_int(e)*f
+
+            flw % w % raw(j,k) = flw % w % raw(j,k) +             &
+                          sqrt(v_b/ed % len(e)**3) *              &
+                          ed % z_int(e)*f
+
+            flw % t % raw(j,k) = flw % t % raw(j,k) +             &
+                          sqrt(v_b/ed % len(e)**3) *              &
+                          ed % t_int(e)*f
+          end if
+        end do
+
       end do
-
     end do
-  end do
+  end if
 
-  u % raw(:,:) = u % raw(:,:) / sqrt(real(eddy % n_eddies, 8))
-  v % raw(:,:) = v % raw(:,:) / sqrt(real(eddy % n_eddies, 8))
-  w % raw(:,:) = w % raw(:,:) / sqrt(real(eddy % n_eddies, 8))
-  t % raw(:,:) = t % raw(:,:) / sqrt(real(eddy % n_eddies, 8))
+  flw % u % raw(:,:) = flw % u % raw(:,:) / sqrt(real(ed % n_eddies, 8))
+  flw % v % raw(:,:) = flw % v % raw(:,:) / sqrt(real(ed % n_eddies, 8))
+  flw % w % raw(:,:) = flw % w % raw(:,:) / sqrt(real(ed % n_eddies, 8))
+  flw % t % raw(:,:) = flw % t % raw(:,:) / sqrt(real(ed % n_eddies, 8))
 
   if( mod(ts,10) .eq. 0) then
-    call Save_Vtk_4_Arrays('raw-velocities', u % raw, v % raw, w % raw, t % raw, ts)
+    call Save_Vtk_4_Arrays(flw % pnt_mesh,    &
+                           flw % u % raw,     &
+                           flw % v % raw,     &
+                           flw % w % raw,     &
+                           flw % t % raw,     &
+                           'raw-velocities',  &
+                           ts)
   end if
 
   end subroutine

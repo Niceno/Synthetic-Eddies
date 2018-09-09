@@ -72,22 +72,23 @@ endif
 #-------------
 #   Modules
 #-------------
-SRC_MOD =  Eddy_Mod.f90		\
-           Mesh_Mod.f90		\
-           Var_Mod.f90		\
-           Prof_Mod.f90		\
-           Sem_Mod.f90
+SRC_MOD = Eddy_Mod.f90		\
+          Mesh_Mod.f90		\
+          Var_Mod.f90		\
+          Flow_Mod.f90		\
+          Prof_Mod.f90
 
 #---------------
 #   Functions   
 #---------------
-SRC_FUN = Convect_Eddy.f90		\
+SRC_FUN = Cholesky.f90			\
+          Convect_Eddy.f90		\
           Eddy_Setting.f90		\
           Generate_Fluctuations.f90	\
-          Initialize.f90		\
           Main_Sem.f90			\
-          Read_Inlet_Profiles.f90	\
+          Mat_Mul.f90			\
           Save_Vtk_4_Arrays.f90		\
+          Save_Vtk_Mesh.f90		\
           Scale_Fluctuations.f90	\
           Statistics.f90		\
           Write_Statistics.f90

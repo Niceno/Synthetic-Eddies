@@ -1,5 +1,5 @@
 !==============================================================================!
-  subroutine Eddy_Mod_Create(ed, n)
+  subroutine Eddy_Mod_Create(ed, n, sig)
 !------------------------------------------------------------------------------!
 !   Create memory for eddies                                                 !
 !------------------------------------------------------------------------------!
@@ -7,10 +7,12 @@
 !---------------------------------[Arguments]----------------------------------!
   type(Eddy_Type) :: ed
   integer         :: n
+  real            :: sig
 !==============================================================================!
 
   ! Store mesh for which the variable is defined
   ed % n_eddies = n
+  ed % sigma    = sig
 
   allocate(ed % num  (n));  ed % num  (:) = 0    ! is this ever used?
   allocate(ed % len  (n));  ed % len  (:) = 0.0
