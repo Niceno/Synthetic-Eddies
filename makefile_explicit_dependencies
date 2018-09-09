@@ -3,6 +3,7 @@ $(DIR_OBJECT)/Write_Statistics.o:\
 $(DIR_OBJECT)/Sem_Mod.o \
 Sem_Mod/*.f90 
 
+#-- ./Eddy_Mod/Allocate.f90
 #-- ./Statistics.f90
 $(DIR_OBJECT)/Statistics.o:\
 $(DIR_OBJECT)/Sem_Mod.o \
@@ -22,6 +23,17 @@ $(DIR_OBJECT)/Sem_Mod.o \
 Sem_Mod/*.f90 
 
 #-- ./Var_Mod/Allocate.f90
+#-- ./.git/objects/7f/603a3e827ee48b143e9e931f900f7c6aa282dd
+#-- ./Initialize.f90
+$(DIR_OBJECT)/Initialize.o:\
+$(DIR_OBJECT)/Sem_Mod.o \
+Sem_Mod/*.f90 
+
+#-- ./Save_Vtk_4_Arrays.f90
+$(DIR_OBJECT)/Save_Vtk_4_Arrays.o:\
+$(DIR_OBJECT)/Sem_Mod.o \
+Sem_Mod/*.f90 
+
 #-- ./Sem_Mod.f90
 $(DIR_OBJECT)/Sem_Mod.o:\
 $(DIR_OBJECT)/Var_Mod.o \
@@ -30,7 +42,8 @@ Sem_Mod/*.f90 \
 $(DIR_OBJECT)/Prof_Mod.o \
 Prof_Mod/*.f90 \
 $(DIR_OBJECT)/Mesh_Mod.o \
-$(DIR_OBJECT)/Eddy_Mod.o 
+$(DIR_OBJECT)/Eddy_Mod.o \
+Eddy_Mod/*.f90 
 
 #-- ./Main_Sem.f90
 $(DIR_OBJECT)/Main_Sem.o:\
@@ -44,10 +57,8 @@ $(DIR_OBJECT)/Sem_Mod.o \
 Sem_Mod/*.f90 
 
 #-- ./Eddy_Mod.f90
-#-- ./Setup.f90
-$(DIR_OBJECT)/Setup.o:\
-$(DIR_OBJECT)/Sem_Mod.o \
-Sem_Mod/*.f90 
+$(DIR_OBJECT)/Eddy_Mod.o:\
+Eddy_Mod/*.f90 
 
 #-- ./Convect_Eddy.f90
 $(DIR_OBJECT)/Convect_Eddy.o:\
@@ -56,15 +67,15 @@ Sem_Mod/*.f90 \
 $(DIR_OBJECT)/Mesh_Mod.o 
 
 #-- ./Mesh_Mod.f90
+#-- ./Read_Inlet_Profiles.f90
+$(DIR_OBJECT)/Read_Inlet_Profiles.o:\
+$(DIR_OBJECT)/Sem_Mod.o \
+Sem_Mod/*.f90 
+
 #-- ./Var_Mod.f90
 $(DIR_OBJECT)/Var_Mod.o:\
 Var_Mod/*.f90 \
 $(DIR_OBJECT)/Mesh_Mod.o 
-
-#-- ./Read_Profiles.f90
-$(DIR_OBJECT)/Read_Profiles.o:\
-$(DIR_OBJECT)/Sem_Mod.o \
-Sem_Mod/*.f90 
 
 #-- ./Generate_Fluctuations.f90
 $(DIR_OBJECT)/Generate_Fluctuations.o:\

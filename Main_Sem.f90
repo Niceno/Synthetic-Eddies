@@ -10,25 +10,35 @@
 !------------------------------------------------------------------------------!
   implicit none
 !-----------------------------------[Locals]-----------------------------------!
-  integer :: ts
+  integer            :: ts
+  integer, parameter :: n_dt = 200
 !==============================================================================!
 
-  call Setup()
-  call Read_Profiles()
+  !--------------------!
+  !   Initialization   !
+  !--------------------!
+  call Initialize()
+  call Read_Inlet_Profiles()
   call Eddy_Setting()
 
+  !---------------!
+  !   Time loop   !
+  !---------------!
   do ts = 1, n_dt
-
-    time = ts * dt
 
     call Generate_Fluctuations(ts)
     call Scale_Fluctuations   (ts)
     call Convect_Eddy()
     call Statistics           (ts)
 
-    write(*,'(a,i5,a)') ' # Sem for',ts,'iteration'
+    write(*,'(a,i5,a,i5)') ' # Time step ', ts, ' from ', n_dt
 
-    if( mod(ts,out_num) == 0 ) call Write_Statistics()
   end do
+
+  !------------------------------!
+  !    At the end of the run,    !
+  !   write out the statistics   !
+  !------------------------------!
+  call Write_Statistics()
 
   end program

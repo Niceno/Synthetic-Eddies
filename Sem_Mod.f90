@@ -12,18 +12,23 @@
   implicit none
 !==============================================================================!
 
-  integer :: n_eddies, n_dt, out_num
-  real    :: dt, sigma, v_b, time, eps
+  integer :: out_num
+  real    :: dt, sigma, v_b
 
-  real, allocatable :: u_pr(:,:), rms_pr(:,:), u_c(:,:)
-
-  type(Eddy_Type), allocatable :: eddy(:)
+  type(Eddy_Type) :: eddy
 
   type(Prof_Type) :: prof
 
   type(Mesh_Type) :: mesh
 
+  ! Unsteady computed quantities
   type(Var_Type)  :: u, v, w, t
+
+  ! Time averaged quantities
+  type(Var_Type)  :: u_avg,  v_avg,  w_avg,  t_avg
+  type(Var_Type)  :: uu_avg, vv_avg, ww_avg
+  type(Var_Type)  :: uv_avg, uw_avg, vw_avg
+  type(Var_Type)  :: tt_avg, ut_avg, vt_avg, wt_avg
 
   contains
 

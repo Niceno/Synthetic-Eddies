@@ -84,10 +84,11 @@ SRC_MOD =  Eddy_Mod.f90		\
 SRC_FUN = Convect_Eddy.f90		\
           Eddy_Setting.f90		\
           Generate_Fluctuations.f90	\
+          Initialize.f90		\
           Main_Sem.f90			\
-          Read_Profiles.f90		\
+          Read_Inlet_Profiles.f90	\
+          Save_Vtk_4_Arrays.f90		\
           Scale_Fluctuations.f90	\
-          Setup.f90			\
           Statistics.f90		\
           Write_Statistics.f90
 

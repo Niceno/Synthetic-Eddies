@@ -1,5 +1,5 @@
 !==============================================================================!
-  subroutine Read_Profiles()
+  subroutine Read_Inlet_Profiles()
 !------------------------------------------------------------------------------!
 !   Reading data from another simulations including mean flow and reynolds     !
 !------------------------------------------------------------------------------!
@@ -41,6 +41,7 @@
                 prof % ts(2,j),  &
                 prof % ts(3,j),  &
                 prof % ts(4,j)
+    mesh % y(j) = prof % y(j)  ! very dirty
   end do
 
   close(100)

@@ -10,44 +10,55 @@
 !---------------------------------[Arguments]----------------------------------!
   integer :: ts
 !-----------------------------------[Locals]-----------------------------------!
-  integer :: it,j,k
-  real    :: u_tmp(4,1:mesh % ny), rms_tmp(8,1:mesh % ny)
+  integer :: j, k
 !==============================================================================!
 
-  u_tmp(1:4,:)   = 0.0
-  rms_tmp(1:8,:) = 0.0
-
+  !------------------------------!
+  !   Time average over domain   !
+  !------------------------------!
   do j = 1, mesh % ny
     do k = 1, mesh % nz
-      u_tmp(1,j) = u_tmp(1,j) + u % com(j,k)
-      u_tmp(2,j) = u_tmp(2,j) + v % com(j,k)
-      u_tmp(3,j) = u_tmp(3,j) + w % com(j,k)
-      u_tmp(4,j) = u_tmp(4,j) + t % com(j,k)
 
-      rms_tmp(1,j) = rms_tmp(1,j) + (u % com(j,k) - prof % u(j))**2
-      rms_tmp(2,j) = rms_tmp(2,j) + (v % com(j,k) - prof % v(j))**2
-      rms_tmp(3,j) = rms_tmp(3,j) + (w % com(j,k) - prof % w(j))**2
-      rms_tmp(4,j) = rms_tmp(4,j) + (t % com(j,k) - prof % t(j))**2
+      ! Mean: u, v, w, t
+      u_avg % com(j,k) = (u_avg % com(j,k)*(ts-1) + u % com(j,k)) / ts
+      v_avg % com(j,k) = (v_avg % com(j,k)*(ts-1) + v % com(j,k)) / ts
+      w_avg % com(j,k) = (w_avg % com(j,k)*(ts-1) + w % com(j,k)) / ts
+      t_avg % com(j,k) = (t_avg % com(j,k)*(ts-1) + t % com(j,k)) / ts
 
-      rms_tmp(5,j) = rms_tmp(5,j)                   &
-                   + (u % com(j,k) - prof % u(j))  &
-                   * (v % com(j,k) - prof % v(j))
-      rms_tmp(6,j) = rms_tmp(6,j)                   &
-                   + (u % com(j,k) - prof % u(j))  &
-                   * (t % com(j,k) - prof % t(j))
-      rms_tmp(7,j) = rms_tmp(7,j)                   &
-                   + (v % com(j,k) - prof % v(j))  &
-                   * (t % com(j,k) - prof % t(j))
-      rms_tmp(8,j) = rms_tmp(8,j)                   &
-                   + (w % com(j,k) - prof % w(j))  &
-                   * (t % com(j,k) - prof % t(j))
+      ! Mean: uu, vv, ww, tt
+      uu_avg % com(j,k) = (   uu_avg % com(j,k) * (ts-1)               &
+                            + (u % com(j,k) - prof % u(j))**2  ) / ts
+      vv_avg % com(j,k) = (   vv_avg % com(j,k) * (ts-1)               &
+                            + (v % com(j,k) - prof % v(j))**2  ) / ts
+      ww_avg % com(j,k) = (   ww_avg % com(j,k) * (ts-1)               &
+                            + (w % com(j,k) - prof % w(j))**2  ) / ts
+      tt_avg % com(j,k) = (   tt_avg % com(j,k) * (ts-1)               &
+                            + (t % com(j,k) - prof % t(j))**2  ) / ts
+
+      ! Mean: uv, uw, vw
+      uv_avg % com(j,k) = (   uv_avg % com(j,k) * (ts-1)                 &
+                            + (   (u % com(j,k) - prof % u(j))           &
+                                * (v % com(j,k) - prof % v(j)) ) ) / ts
+      uw_avg % com(j,k) = (   uw_avg % com(j,k) * (ts-1)                 &
+                            + (   (u % com(j,k) - prof % u(j))           &
+                                * (w % com(j,k) - prof % w(j)) ) ) / ts
+      vw_avg % com(j,k) = (   vw_avg % com(j,k) * (ts-1)                 &
+                            + (   (v % com(j,k) - prof % v(j))           &
+                                * (w % com(j,k) - prof % w(j)) ) ) / ts
+
+      ! Mean: ut, vt, wt
+      ut_avg % com(j,k) = (   ut_avg % com(j,k) * (ts-1)                 &
+                            + (   (u % com(j,k) - prof % u(j))           &
+                                * (t % com(j,k) - prof % t(j)) ) ) / ts
+      vt_avg % com(j,k) = (   vt_avg % com(j,k) * (ts-1)                 &
+                            + (   (v % com(j,k) - prof % v(j))           &
+                                * (t % com(j,k) - prof % t(j)) ) ) / ts
+      wt_avg % com(j,k) = (   wt_avg % com(j,k) * (ts-1)                 &
+                            + (   (w % com(j,k) - prof % w(j))           &
+                                * (t % com(j,k) - prof % t(j)) ) ) / ts
+
     end do
 
-    u_tmp(1:4,j) = u_tmp(1:4,j)/mesh % nz
-    u_pr(1:4,j)  = ( u_pr(1:4,j) * (ts - 1) + u_tmp(1:4,j) )/ts
-
-    rms_tmp(1:8,j) = rms_tmp(1:8,j)/mesh % nz
-    rms_pr(1:8,j) = ( rms_pr(1:8,j) * (ts - 1) + rms_tmp(1:8,j) )/ts
 
   end do
 
