@@ -43,7 +43,7 @@
   !-------------------!
   !   Nodes section   !
   !-------------------!
-  write(VTK, '(a,i6,a)')  'POINTS ', n_nodes, ' float'
+  write(VTK, '(a7,i6,a6)')  'POINTS ', n_nodes, ' float'
 
   ! Read all nodes from NEU and write them to VTK
   do n = 1, n_nodes
@@ -58,7 +58,7 @@
   !-------------------!
   !   Cells section   !
   !-------------------!
-  write(VTK, '(a,2i6,a)')  'CELLS ', n_cells, n_cells*5
+  write(VTK, '(a,2i6)')  'CELLS ', n_cells, n_cells*5
 
   ! Read all cells from NEU and write them to VTK
   do n = 1, n_cells
