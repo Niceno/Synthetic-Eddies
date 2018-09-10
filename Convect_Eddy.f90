@@ -29,9 +29,9 @@
   z_s = minval(msh % zn(:))  - ed % sigma
   z_e = maxval(msh % zn(:))  + ed % sigma
 
-  u_conv = sum(flw % u % com) / (msh % ny * msh % nz)
-  v_conv = sum(flw % v % com) / (msh % ny * msh % nz)
-  w_conv = sum(flw % w % com) / (msh % ny * msh % nz)
+  u_conv = sum(flw % u % com) / msh % n_cells
+  v_conv = sum(flw % v % com) / msh % n_cells
+  w_conv = sum(flw % w % com) / msh % n_cells
 
   do e = 1, ed % n_eddies
     ed % x(e) = ed % x(e) + u_conv * dt

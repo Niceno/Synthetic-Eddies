@@ -26,10 +26,10 @@
   !--------------------!
   !   Initialization   !
   !--------------------!
-!  call Mesh_Mod_Create_Cartesian(mesh, 96, 256)
-  call Mesh_Mod_Create_From_File(mesh, "circle.vtk")  ! mesh
+  call Mesh_Mod_Create_Cartesian(mesh, 97, 257)       ! node numbers
+! call Mesh_Mod_Create_From_File(mesh, "circle.vtk")  ! mesh
   call Flow_Mod_Create(flow, mesh)                    ! flow
-  call Prof_Mod_Create(prof, mesh % ny)               ! profile
+  call Prof_Mod_Create(prof, mesh % ny - 1)           ! profile
   call Eddy_Mod_Create(eddy, 1024, 0.2)               ! n_eddies and sigma
 
   call Prof_Mod_Read(prof, mesh, 'input_line_tmp.dat')  ! this should be part of Prof_Mod_Create

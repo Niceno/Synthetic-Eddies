@@ -8,7 +8,7 @@
   implicit none
 !---------------------------------[Arguments]----------------------------------!
   type(Mesh_Type)                     :: msh
-  real, dimension(msh % ny, msh % nz) :: arr_1, arr_2, arr_3, arr_4
+  real, dimension(msh%ny-1, msh%nz-1) :: arr_1, arr_2, arr_3, arr_4
   character(len=*)                    :: stem_name
   integer                             :: ts
 !-----------------------------------[Locals]-----------------------------------!
@@ -41,32 +41,32 @@
     write(1, '(es12.4)') msh % zn(k)
   end do
   write(1, '(a, i6)')  'CELL_DATA',   msh % n_cells
-  write(1, '(a, i6)')  'POINT_DATA',  msh % n_nodes
   write(1, '(a)')      'FIELD FieldData 4'
-  write(1, '(a,i6,a)') 'U-velocity 1', msh % n_nodes, ' float'
-  do k = 1, msh % nz
-    do j = 1, msh % ny
+  write(1, '(a,i6,a)') 'U-velocity 1', msh % n_cells, ' float'
+  do k = 1, msh % nz - 1
+    do j = 1, msh % ny - 1
       write(1, '(es12.4)') arr_1(j,k)
     end do
   end do
-  write(1, '(a,i6,a)') 'V-velocity 1', msh % n_nodes, ' float'
-  do k = 1, msh % nz
-    do j = 1, msh % ny
+  write(1, '(a,i6,a)') 'V-velocity 1', msh % n_cells, ' float'
+  do k = 1, msh % nz - 1
+    do j = 1, msh % ny - 1
       write(1, '(es12.4)') arr_2(j,k)
     end do
   end do
-  write(1, '(a,i6,a)') 'W-velocity 1', msh % n_nodes, ' float'
-  do k = 1, msh % nz
-    do j = 1, msh % ny
+  write(1, '(a,i6,a)') 'W-velocity 1', msh % n_cells, ' float'
+  do k = 1, msh % nz - 1
+    do j = 1, msh % ny - 1
       write(1, '(es12.4)') arr_3(j,k)
     end do
   end do
-  write(1, '(a,i6,a)') 'Temperature 1', msh % n_nodes, ' float'
-  do k = 1, msh % nz
-    do j = 1, msh % ny
+  write(1, '(a,i6,a)') 'Temperature 1', msh % n_cells, ' float'
+  do k = 1, msh % nz - 1
+    do j = 1, msh % ny - 1
       write(1, '(es12.4)') arr_4(j,k)
     end do
   end do
+  write(1, '(a, i6)')  'POINT_DATA',  msh % n_nodes
 
   close(1)
 

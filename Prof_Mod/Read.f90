@@ -42,9 +42,6 @@
                 prf % ts(2,j),  &
                 prf % ts(3,j),  &
                 prf % ts(4,j)
-    if(msh % mode == STRUCTURED) then
-      msh % yn(j) = prf % y(j)  ! very dirty
-    end if
   end do
 
   close(100)
@@ -52,5 +49,21 @@
   write(*,*) '# ... reading process is completed'
   write(*,*) '#----------------------------------'
   write(*,*) ''
+
+  ! Finish defining node coordinates; very dirty
+  msh % yn(1)        = 0.0
+  msh % yn(msh % ny) = 2.0
+
+  ! Just copy cell coordinates from the profile
+  if(msh % mode == STRUCTURED) then
+    do j = 1, msh % ny - 1
+      msh % yc(j) = prf % y(j)  ! very dirty
+    end do
+  end if
+
+  ! Interpolate node coordinates from cell coordinates
+  do j = 2, msh % ny - 1
+    msh % yn(j) = ( msh % yc(j-1) + msh % yc(j) ) * 0.5
+  end do
 
   end subroutine

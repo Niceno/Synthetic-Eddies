@@ -25,8 +25,9 @@
   ! Take mesh pointer
   msh = flw % pnt_mesh
 
-  do k = 1, msh % nz
-    do j = 1, msh % ny
+  ! Browse through all cells
+  do k = 1, msh % nz - 1
+    do j = 1, msh % ny - 1
       a(1:4,1:4)     = 0.0
       r_loc(1:4,1:4) = 0.0
       u_ins(1:4,1)   = 0.0

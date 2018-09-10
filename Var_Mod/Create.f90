@@ -12,8 +12,9 @@
   ! Store mesh for which the variable is defined
   phi % pnt_mesh => mesh
 
-  allocate (phi % com(mesh % ny, mesh % nz))
-  allocate (phi % raw(mesh % ny, mesh % nz))
+  ! Allocate unknowns in cell centres
+  allocate (phi % com(mesh % ny-1, mesh % nz-1))
+  allocate (phi % raw(mesh % ny-1, mesh % nz-1))
 
   phi % com(:,:) = 0.0
   phi % raw(:,:) = 0.0

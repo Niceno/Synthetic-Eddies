@@ -24,8 +24,8 @@
   !------------------------------!
   !   Time average over domain   !
   !------------------------------!
-  do j = 1, msh % ny
-    do k = 1, msh % nz
+  do j = 1, msh % ny - 1
+    do k = 1, msh % nz - 1
 
       ! Mean: u, v, w, t
       flw % u_avg % com(j,k) = (  flw % u_avg % com(j,k)*(ts-1)  &
@@ -69,8 +69,6 @@
                               + (   (flw % w % com(j,k) - prf % w(j))          &
                                   * (flw % t % com(j,k) - prf % t(j)) ) ) / ts
     end do
-
-
   end do
 
   end subroutine

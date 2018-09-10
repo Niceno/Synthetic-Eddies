@@ -42,13 +42,13 @@
   v_b = s * 2 * ed % sigma
 
   if(msh % mode == STRUCTURED) then
-    do k = 1, msh % nz
-      do j = 1, msh % ny
+    do k = 1, msh % nz - 1                              ! through cells
+      do j = 1, msh % ny - 1                            ! through cells
 
         do e = 1, ed % n_eddies
           x0 = (0           - ed % x(e)) / ed % len(e)
-          y0 = (msh % yn(j) - ed % y(e)) / ed % len(e)  ! <--= yn
-          z0 = (msh % zn(k) - ed % z(e)) / ed % len(e)  ! <-== zn
+          y0 = (msh % yc(j) - ed % y(e)) / ed % len(e)  ! cell center
+          z0 = (msh % zc(k) - ed % z(e)) / ed % len(e)  ! cell center
 
           !--------------------!
           !   Shape function   !
