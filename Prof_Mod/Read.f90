@@ -12,36 +12,37 @@
   type(Mesh_Type)  :: msh
   character(len=*) :: file_name
 !-----------------------------------[Locals]-----------------------------------!
-  integer           :: j, k
-  character(len=80) :: header
+  integer            :: i, j, k
+  character(len=256) :: header
 !==============================================================================!
 
   write(*,*) '#=================================='
   write(*,*) '# Reading process started ...'
 
   open(100, file=file_name, form='formatted', status='old')
-  read(100,*) header
-  read(100,*) header
+  do i = 1, 7
+    read(100,*) header
+  end do
 
   !-------------------------------------!
   !   Main loop of reading slice data   !
   !-------------------------------------!
   do j = 1, prf % n_points
-    read(100,*) prf % y(j),     &
-                prf % u(j),     &
-                prf % v(j),     &
-                prf % w(j),     &
-                prf % t(j),     &
-                prf % rs(1,j),  &
-                prf % rs(2,j),  &
-                prf % rs(3,j),  &
-                prf % rs(4,j),  &
-                prf % rs(5,j),  &
-                prf % rs(6,j),  &
-                prf % ts(1,j),  &
-                prf % ts(2,j),  &
-                prf % ts(3,j),  &
-                prf % ts(4,j)
+    read(100,*) prf % y(j),     &    !  1  y 
+                prf % u(j),     &    !  2  u
+                prf % v(j),     &    !  3  v  ~ zero
+                prf % w(j),     &    !  4  w  ~ zero
+                prf % t(j),     &    !  5  t
+                prf % rs(1,j),  &    !  6  uu
+                prf % rs(2,j),  &    !  7  vv
+                prf % rs(3,j),  &    !  8  ww
+                prf % rs(4,j),  &    !  9  uv
+                prf % rs(5,j),  &    ! 10  uw ~ zero
+                prf % rs(6,j),  &    ! 11  vw ~ zero
+                prf % ts(1,j),  &    ! 12  tt
+                prf % ts(2,j),  &    ! 13  ut
+                prf % ts(3,j),  &    ! 14  vt
+                prf % ts(4,j)        ! 15  wt ~ zero
   end do
 
   close(100)
