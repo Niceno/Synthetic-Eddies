@@ -4,7 +4,8 @@
 !   Module for Synthetic Eddy Method inflow generator                                            !
 !------------------------------------------------------------------------------!
 !----------------------------------[Modules]-----------------------------------!
-  use Var_Mod
+  use Mesh_Mod, only: Mesh_Type
+  use Var_Mod,  only: Var_Type, Var_Mod_Create
 !------------------------------------------------------------------------------!
   implicit none
 !==============================================================================!
@@ -32,5 +33,6 @@
   contains
 
   include 'Flow_Mod/Create.f90'
+  include 'Flow_Mod/Fetch_Profile.f90'
 
   end module

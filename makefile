@@ -75,8 +75,8 @@ endif
 SRC_MOD = Eddy_Mod.f90		\
           Mesh_Mod.f90		\
           Var_Mod.f90		\
-          Flow_Mod.f90		\
-          Prof_Mod.f90
+          Prof_Mod.f90		\
+          Flow_Mod.f90
 
 #---------------
 #   Functions   

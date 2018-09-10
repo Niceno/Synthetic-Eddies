@@ -31,9 +31,7 @@ Flow_Mod/*.f90
 $(DIR_OBJECT)/Prof_Mod.o:\
 Prof_Mod/*.f90 \
 $(DIR_OBJECT)/Mesh_Mod.o \
-Mesh_Mod/*.f90 \
-$(DIR_OBJECT)/Flow_Mod.o \
-Flow_Mod/*.f90 
+Mesh_Mod/*.f90 
 
 #-- ./Var_Mod/Create.f90
 #-- ./Var_Mod.f90
@@ -59,6 +57,8 @@ Flow_Mod/*.f90
 $(DIR_OBJECT)/Flow_Mod.o:\
 $(DIR_OBJECT)/Var_Mod.o \
 Var_Mod/*.f90 \
+$(DIR_OBJECT)/Prof_Mod.o \
+Prof_Mod/*.f90 \
 $(DIR_OBJECT)/Mesh_Mod.o \
 Mesh_Mod/*.f90 \
 Flow_Mod/*.f90 
@@ -92,11 +92,6 @@ Flow_Mod/*.f90 \
 $(DIR_OBJECT)/Eddy_Mod.o \
 Eddy_Mod/*.f90 
 
-#-- ./Save_Vtk_4_Arrays.f90
-$(DIR_OBJECT)/Save_Vtk_4_Arrays.o:\
-$(DIR_OBJECT)/Mesh_Mod.o \
-Mesh_Mod/*.f90 
-
 #-- ./Convect_Eddy.f90
 $(DIR_OBJECT)/Convect_Eddy.o:\
 $(DIR_OBJECT)/Mesh_Mod.o \
@@ -119,11 +114,11 @@ $(DIR_OBJECT)/Create.o:\
 $(DIR_OBJECT)/Mesh_Mod.o \
 Mesh_Mod/*.f90 
 
-#-- ./Prof_Mod/Create.f90
-#-- ./Prof_Mod/Read.f90
-$(DIR_OBJECT)/Read.o:\
+#-- ./Flow_Mod/Fetch_Profile.f90
+$(DIR_OBJECT)/Fetch_Profile.o:\
+$(DIR_OBJECT)/Prof_Mod.o \
+Prof_Mod/*.f90 \
 $(DIR_OBJECT)/Mesh_Mod.o \
-Mesh_Mod/*.f90 \
-$(DIR_OBJECT)/Flow_Mod.o \
-Flow_Mod/*.f90 
+Mesh_Mod/*.f90 
 
+#-- ./Prof_Mod/Create.f90

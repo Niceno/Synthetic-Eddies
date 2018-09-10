@@ -26,18 +26,17 @@
   real,    parameter :: DT   = 5.0e-3
 !==============================================================================!
 
-  !--------------------!
-  !   Initialization   !
-  !--------------------!
+  !------------------!
+  !   Constructors   !
+  !------------------!
   call Mesh_Mod_Create_Cartesian(mesh, 97, 257)       ! node numbers
 ! call Mesh_Mod_Create_From_File(mesh, "circle.vtk")  ! mesh
   call Flow_Mod_Create(flow, mesh)                    ! flow
-  call Prof_Mod_Create(prof, mesh % ny - 1)           ! profile
-  call Eddy_Mod_Create(eddy, 1024, 0.2)               ! n_eddies and sigma
+  call Prof_Mod_Create(prof, 'input_line_tmp.dat')    ! profile
+  call Eddy_Mod_Create(eddy, 1024, 0.2)               ! eddies
 
-  call Prof_Mod_Read(prof, flow, 'input_line_tmp.dat')  ! this should be part of Prof_Mod_Create
-
-  ! Save only the interpolated DNS database
+  ! Copy DNS profiles to numerical mesh, and plot what you obtained
+  call Flow_Mod_Fetch_Profile(flow, prof)
   call Save_Vtk_Flow(flow, 'dns-from-file', 0, dns=.true.)
 
   call Eddy_Setting(eddy, mesh)
