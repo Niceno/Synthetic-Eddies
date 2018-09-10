@@ -13,9 +13,9 @@
 
     type(Mesh_Type), pointer :: pnt_mesh  ! grid for which it is defined
 
-    real, allocatable :: raw(:,:)   ! raw
-    real, allocatable :: com(:,:)   ! combined
-    real, allocatable :: dns(:,:)   ! obtained from DNS database, "exact"
+    real, allocatable :: raw(:)   ! raw
+    real, allocatable :: com(:)   ! combined
+    real, allocatable :: dns(:)   ! obtained from DNS database, "exact"
   end type
 
   contains

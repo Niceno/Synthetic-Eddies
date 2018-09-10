@@ -74,23 +74,27 @@
 
   do k = 1, msh % nz - 1
     do j = 1, msh % ny - 1
-      flw % u_avg  % dns(j,k) = prf % u(j)
-      flw % v_avg  % dns(j,k) = prf % v(j)
-      flw % w_avg  % dns(j,k) = prf % w(j)
-      flw % t_avg  % dns(j,k) = prf % t(j)
+      flw % u_avg  % dns(At(j,k)) = prf % u(j)
+      flw % v_avg  % dns(At(j,k)) = prf % v(j)
+      flw % w_avg  % dns(At(j,k)) = prf % w(j)
+      flw % t_avg  % dns(At(j,k)) = prf % t(j)
 
-      flw % uu_avg % dns(j,k) = prf % rs(1,j)
-      flw % vv_avg % dns(j,k) = prf % rs(2,j)
-      flw % ww_avg % dns(j,k) = prf % rs(3,j)
-      flw % uv_avg % dns(j,k) = prf % rs(4,j)
-      flw % uw_avg % dns(j,k) = prf % rs(5,j)    ! ~ zero
-      flw % vw_avg % dns(j,k) = prf % rs(6,j)    ! ~ zero
+      flw % uu_avg % dns(At(j,k)) = prf % rs(1,j)
+      flw % vv_avg % dns(At(j,k)) = prf % rs(2,j)
+      flw % ww_avg % dns(At(j,k)) = prf % rs(3,j)
+      flw % uv_avg % dns(At(j,k)) = prf % rs(4,j)
+      flw % uw_avg % dns(At(j,k)) = prf % rs(5,j)    ! ~ zero
+      flw % vw_avg % dns(At(j,k)) = prf % rs(6,j)    ! ~ zero
 
-      flw % tt_avg % dns(j,k) = prf % ts(1,j)
-      flw % ut_avg % dns(j,k) = prf % ts(2,j)
-      flw % vt_avg % dns(j,k) = prf % ts(3,j)
-      flw % wt_avg % dns(j,k) = prf % ts(4,j)    ! ~ zero
+      flw % tt_avg % dns(At(j,k)) = prf % ts(1,j)
+      flw % ut_avg % dns(At(j,k)) = prf % ts(2,j)
+      flw % vt_avg % dns(At(j,k)) = prf % ts(3,j)
+      flw % wt_avg % dns(At(j,k)) = prf % ts(4,j)    ! ~ zero
     end do
   end do
+
+  contains
+
+  include '../At.f90'
 
   end subroutine

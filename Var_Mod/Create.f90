@@ -13,12 +13,12 @@
   phi % pnt_mesh => mesh
 
   ! Allocate unknowns in cell centres
-  allocate (phi % com(mesh % ny-1, mesh % nz-1))
-  allocate (phi % raw(mesh % ny-1, mesh % nz-1))
-  allocate (phi % dns(mesh % ny-1, mesh % nz-1))
+  allocate (  phi % com( (mesh % ny-1) * (mesh % nz-1) )   )
+  allocate (  phi % raw( (mesh % ny-1) * (mesh % nz-1) )   )
+  allocate (  phi % dns( (mesh % ny-1) * (mesh % nz-1) )   )
 
-  phi % com(:,:) = 0.0
-  phi % raw(:,:) = 0.0
-  phi % dns(:,:) = 0.0
+  phi % com(:) = 0.0
+  phi % raw(:) = 0.0
+  phi % dns(:) = 0.0
 
   end subroutine

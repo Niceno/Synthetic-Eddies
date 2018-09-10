@@ -24,10 +24,10 @@
   ! Take mesh pointer
   msh = flw % pnt_mesh
 
-  flw % u % raw(:,:) = 0.0
-  flw % v % raw(:,:) = 0.0
-  flw % w % raw(:,:) = 0.0
-  flw % t % raw(:,:) = 0.0
+  flw % u % raw(:) = 0.0
+  flw % v % raw(:) = 0.0
+  flw % w % raw(:) = 0.0
+  flw % t % raw(:) = 0.0
 
   ! Surface area ...
   if(msh % mode .eq. STRUCTURED) then
@@ -58,19 +58,19 @@
                 sqrt(1.5) * (1- abs(y0)) *                        &
                 sqrt(1.5) * (1- abs(z0))
 
-            flw % u % raw(j,k) = flw % u % raw(j,k) +             &
+            flw % u % raw(At(j,k)) = flw % u % raw(At(j,k)) +     &
                            sqrt(v_b/ed % len(e)**3) *             &
                            ed % x_int(e)*f
 
-            flw % v % raw(j,k) = flw % v % raw(j,k) +             &
+            flw % v % raw(At(j,k)) = flw % v % raw(At(j,k)) +     &
                           sqrt(v_b/ed % len(e)**3) *              &
                           ed % y_int(e)*f
 
-            flw % w % raw(j,k) = flw % w % raw(j,k) +             &
+            flw % w % raw(At(j,k)) = flw % w % raw(At(j,k)) +     &
                           sqrt(v_b/ed % len(e)**3) *              &
                           ed % z_int(e)*f
 
-            flw % t % raw(j,k) = flw % t % raw(j,k) +             &
+            flw % t % raw(At(j,k)) = flw % t % raw(At(j,k)) +     &
                           sqrt(v_b/ed % len(e)**3) *              &
                           ed % t_int(e)*f
           end if
@@ -80,10 +80,10 @@
     end do
   end if
 
-  flw % u % raw(:,:) = flw % u % raw(:,:) / sqrt(real(ed % n_eddies, 8))
-  flw % v % raw(:,:) = flw % v % raw(:,:) / sqrt(real(ed % n_eddies, 8))
-  flw % w % raw(:,:) = flw % w % raw(:,:) / sqrt(real(ed % n_eddies, 8))
-  flw % t % raw(:,:) = flw % t % raw(:,:) / sqrt(real(ed % n_eddies, 8))
+  flw % u % raw(:) = flw % u % raw(:) / sqrt(real(ed % n_eddies, 8))
+  flw % v % raw(:) = flw % v % raw(:) / sqrt(real(ed % n_eddies, 8))
+  flw % w % raw(:) = flw % w % raw(:) / sqrt(real(ed % n_eddies, 8))
+  flw % t % raw(:) = flw % t % raw(:) / sqrt(real(ed % n_eddies, 8))
 
   if( mod(ts,10) .eq. 0) then
     call Save_Vtk_4_Arrays(flw % pnt_mesh,    &
@@ -94,5 +94,9 @@
                            'raw-velocities',  &
                            ts)
   end if
+
+  contains
+
+  include 'At.f90'
 
   end subroutine

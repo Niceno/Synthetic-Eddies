@@ -7,10 +7,10 @@
 !------------------------------------------------------------------------------!
   implicit none
 !---------------------------------[Arguments]----------------------------------!
-  type(Mesh_Type)                     :: msh
-  real, dimension(msh%ny-1, msh%nz-1) :: arr_1, arr_2, arr_3, arr_4
-  character(len=*)                    :: stem_name
-  integer                             :: ts
+  type(Mesh_Type)                        :: msh
+  real, dimension((msh%ny-1)*(msh%nz-1)) :: arr_1, arr_2, arr_3, arr_4
+  character(len=*)                       :: stem_name
+  integer                                :: ts
 !-----------------------------------[Locals]-----------------------------------!
   integer           :: e, j, k, l
   real              :: x0, y0, z0, f
@@ -45,29 +45,33 @@
   write(1, '(a,i6,a)') 'U-velocity 1', msh % n_cells, ' float'
   do k = 1, msh % nz - 1
     do j = 1, msh % ny - 1
-      write(1, '(es12.4)') arr_1(j,k)
+      write(1, '(es12.4)') arr_1(At(j,k))
     end do
   end do
   write(1, '(a,i6,a)') 'V-velocity 1', msh % n_cells, ' float'
   do k = 1, msh % nz - 1
     do j = 1, msh % ny - 1
-      write(1, '(es12.4)') arr_2(j,k)
+      write(1, '(es12.4)') arr_2(At(j,k))
     end do
   end do
   write(1, '(a,i6,a)') 'W-velocity 1', msh % n_cells, ' float'
   do k = 1, msh % nz - 1
     do j = 1, msh % ny - 1
-      write(1, '(es12.4)') arr_3(j,k)
+      write(1, '(es12.4)') arr_3(At(j,k))
     end do
   end do
   write(1, '(a,i6,a)') 'Temperature 1', msh % n_cells, ' float'
   do k = 1, msh % nz - 1
     do j = 1, msh % ny - 1
-      write(1, '(es12.4)') arr_4(j,k)
+      write(1, '(es12.4)') arr_4(At(j,k))
     end do
   end do
   write(1, '(a, i6)')  'POINT_DATA',  msh % n_nodes
 
   close(1)
+
+  contains
+
+  include 'At.f90'
 
   end subroutine

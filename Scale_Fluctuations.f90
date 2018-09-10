@@ -34,29 +34,41 @@
       u_mean(1:4,1)  = 0.0
       u_tmp(1:4,1)   = 0.0
 
-      u_mean(1:4,1) = (/ flw % u_avg % dns(j,k),  flw % v_avg % dns(j,k),   &
-                         flw % w_avg % dns(j,k),  flw % t_avg % dns(j,k)  /)
-      u_tmp (1:4,1) = (/ flw % u % raw(j,k), flw % v % raw(j,k),  &
-                         flw % w % raw(j,k), flw % t % raw(j,k) /)
+      u_mean(1:4,1) = (/ flw % u_avg % dns(At(j,k)),   &
+                         flw % v_avg % dns(At(j,k)),   &
+                         flw % w_avg % dns(At(j,k)),   &
+                         flw % t_avg % dns(At(j,k))  /)
+      u_tmp (1:4,1) = (/ flw % u % raw(At(j,k)),  &
+                         flw % v % raw(At(j,k)),  &
+                         flw % w % raw(At(j,k)),  &
+                         flw % t % raw(At(j,k)) /)
 
-      r_loc(1,1:4)  = (/ flw % uu_avg % dns(j,k), flw % uv_avg % dns(j,k),  &
-                         flw % uw_avg % dns(j,k), flw % ut_avg % dns(j,k) /)
-      r_loc(2,1:4)  = (/ flw % uv_avg % dns(j,k), flw % vv_avg % dns(j,k),  &
-                         flw % vw_avg % dns(j,k), flw % vt_avg % dns(j,k) /)
-      r_loc(3,1:4)  = (/ flw % uw_avg % dns(j,k), flw % vw_avg % dns(j,k),  &
-                         flw % ww_avg % dns(j,k), flw % wt_avg % dns(j,k) /)
-      r_loc(4,1:4)  = (/ flw % ut_avg % dns(j,k), flw % vt_avg % dns(j,k),  &
-                         flw % wt_avg % dns(j,k), flw % tt_avg % dns(j,k) /)
+      r_loc(1,1:4)  = (/ flw % uu_avg % dns(At(j,k)),  &
+                         flw % uv_avg % dns(At(j,k)),  &
+                         flw % uw_avg % dns(At(j,k)),  &
+                         flw % ut_avg % dns(At(j,k)) /)
+      r_loc(2,1:4)  = (/ flw % uv_avg % dns(At(j,k)),  &
+                         flw % vv_avg % dns(At(j,k)),  &
+                         flw % vw_avg % dns(At(j,k)),  &
+                         flw % vt_avg % dns(At(j,k)) /)
+      r_loc(3,1:4)  = (/ flw % uw_avg % dns(At(j,k)),  &
+                         flw % vw_avg % dns(At(j,k)),  &
+                         flw % ww_avg % dns(At(j,k)),  &
+                         flw % wt_avg % dns(At(j,k)) /)
+      r_loc(4,1:4)  = (/ flw % ut_avg % dns(At(j,k)),  &
+                         flw % vt_avg % dns(At(j,k)),  &
+                         flw % wt_avg % dns(At(j,k)),  &
+                         flw % tt_avg % dns(At(j,k)) /)
 
       call Cholesky(a,r_loc,4)
       call Mat_Mul(a,u_tmp,u_fluc,4,1,4)
 
       u_ins(1:4,1) = u_mean(1:4,1) + u_fluc(1:4,1)
 
-      flw % u % com(j,k) = u_ins(1,1)
-      flw % v % com(j,k) = u_ins(2,1)
-      flw % w % com(j,k) = u_ins(3,1)
-      flw % t % com(j,k) = u_ins(4,1)
+      flw % u % com(At(j,k)) = u_ins(1,1)
+      flw % v % com(At(j,k)) = u_ins(2,1)
+      flw % w % com(At(j,k)) = u_ins(3,1)
+      flw % t % com(At(j,k)) = u_ins(4,1)
 
     end do
   end do
@@ -70,5 +82,9 @@
                            'com-velocities',  &
                            ts)
   end if
+
+  contains
+
+  include 'At.f90'
 
   end subroutine
