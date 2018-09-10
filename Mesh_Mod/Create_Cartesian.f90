@@ -6,7 +6,7 @@
   type(Mesh_Type) :: msh
   integer         :: ny, nz
 !-----------------------------------[Locals]-----------------------------------!
-  integer :: k
+  integer :: j, k
 !==============================================================================!
 
   msh % mode     =  STRUCTURED
@@ -24,9 +24,14 @@
   allocate(msh % yc(msh % ny - 1))
   allocate(msh % zc(msh % nz - 1))
 
-  ! Initialize "y" coordinates, you will compute them later from profile
-  ! Very bad practice, should be improved soon
-  msh % yn(:) = 0.0
+  ! Initialize "y" coordinates, they range from zero to two
+  do j = 1, msh % nz
+    msh % yn(j) = (j-1) * 2.00 / (msh % ny-1)
+  end do
+
+  do j = 1, msh % ny - 1
+    msh % yc(j) = ( msh % yn(j) + msh % yn(j+1) ) * 0.5
+  end do
 
   ! Compute "z" cooridnates for nodes and ...
   ! ... cells, assuming domain width is 2 PI
