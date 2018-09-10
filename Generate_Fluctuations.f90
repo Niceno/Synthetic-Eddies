@@ -85,16 +85,6 @@
   flw % w % raw(:) = flw % w % raw(:) / sqrt(real(ed % n_eddies, 8))
   flw % t % raw(:) = flw % t % raw(:) / sqrt(real(ed % n_eddies, 8))
 
-  if( mod(ts,10) .eq. 0) then
-    call Save_Vtk_4_Arrays(flw % pnt_mesh,    &
-                           flw % u % raw,     &
-                           flw % v % raw,     &
-                           flw % w % raw,     &
-                           flw % t % raw,     &
-                           'raw-velocities',  &
-                           ts)
-  end if
-
   contains
 
   include 'At.f90'

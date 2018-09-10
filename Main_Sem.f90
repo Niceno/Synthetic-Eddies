@@ -12,6 +12,8 @@
   use Flow_Mod
 !------------------------------------------------------------------------------!
   implicit none
+!----------------------------------[Calling]-----------------------------------!
+  include 'Save_Vtk_Flow.int'
 !-----------------------------------[Locals]-----------------------------------!
   type(Eddy_Type) :: eddy
   type(Prof_Type) :: prof
@@ -48,6 +50,9 @@
     call Convect_Eddy         (flow, eddy, DT)
     call Statistics           (flow, ts)
 
+    if(mod(ts,10) .eq. 0) then
+      call Save_Vtk_Flow(flow, 'flow', ts, raw=.true., avg=.true.)
+    end if
   end do
 
   !------------------------------!

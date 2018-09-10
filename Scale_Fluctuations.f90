@@ -73,16 +73,6 @@
     end do
   end do
 
-  if( mod(ts,10) .eq. 0) then
-    call Save_Vtk_4_Arrays(flw % pnt_mesh,    &
-                           flw % u % com,     &
-                           flw % v % com,     &
-                           flw % w % com,     &
-                           flw % t % com,     &
-                           'com-velocities',  &
-                           ts)
-  end if
-
   contains
 
   include 'At.f90'
