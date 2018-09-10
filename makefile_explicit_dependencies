@@ -1,6 +1,4 @@
 #-- ./Write_Statistics.f90
-$(DIR_OBJECT)/Write_Statistics.o:
-
 #-- ./Mat_Mul.f90
 #-- ./Eddy_Mod/Create.f90
 #-- ./Statistics.f90
@@ -43,8 +41,8 @@ Flow_Mod/*.f90
 
 #-- ./Var_Mod/Create.f90
 #-- ./Mesh_Mod/Create_Cartesian.f90
+#-- ./Mesh_Mod/Calculate_Geometry.f90
 #-- ./Mesh_Mod/Create_From_File.f90
-#-- ./.git/objects/7f/603a3e827ee48b143e9e931f900f7c6aa282dd
 #-- ./Save_Vtk_4_Arrays.f90
 $(DIR_OBJECT)/Save_Vtk_4_Arrays.o:\
 $(DIR_OBJECT)/Mesh_Mod.o \
@@ -94,6 +92,11 @@ Mesh_Mod/*.f90
 
 #-- ./Save_Vtk_Mesh.f90
 $(DIR_OBJECT)/Save_Vtk_Mesh.o:\
+$(DIR_OBJECT)/Mesh_Mod.o \
+Mesh_Mod/*.f90 
+
+#-- ./Read_Vtk_Mesh.f90
+$(DIR_OBJECT)/Read_Vtk_Mesh.o:\
 $(DIR_OBJECT)/Mesh_Mod.o \
 Mesh_Mod/*.f90 
 

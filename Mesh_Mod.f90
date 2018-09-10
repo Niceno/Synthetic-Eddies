@@ -28,11 +28,13 @@
     real,    allocatable :: zn(:)             ! nodes' "z" coordinates
     real,    allocatable :: yc(:)             ! cells' "y" coordinates
     real,    allocatable :: zc(:)             ! cells' "z" coordinates
+    real,    allocatable :: area(:)           ! cells' areas
   end type
 
   contains
 
   include 'Mesh_Mod/Create_Cartesian.f90'
   include 'Mesh_Mod/Create_From_File.f90'
+  include 'Mesh_Mod/Calculate_Geometry.f90'
 
   end module

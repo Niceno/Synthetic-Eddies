@@ -87,6 +87,7 @@ SRC_FUN = Cholesky.f90			\
           Generate_Fluctuations.f90	\
           Main_Sem.f90			\
           Mat_Mul.f90			\
+          Read_Vtk_Mesh.f90		\
           Save_Vtk_4_Arrays.f90		\
           Save_Vtk_Mesh.f90		\
           Scale_Fluctuations.f90	\

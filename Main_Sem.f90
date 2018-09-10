@@ -26,8 +26,8 @@
   !--------------------!
   !   Initialization   !
   !--------------------!
-  call Mesh_Mod_Create_Cartesian(mesh, 96, 256)
-! call Mesh_Mod_Create_From_File(mesh, "circle.vtk")  ! mesh
+!  call Mesh_Mod_Create_Cartesian(mesh, 96, 256)
+  call Mesh_Mod_Create_From_File(mesh, "circle.vtk")  ! mesh
   call Flow_Mod_Create(flow, mesh)                    ! flow
   call Prof_Mod_Create(prof, mesh % ny)               ! profile
   call Eddy_Mod_Create(eddy, 1024, 0.2)               ! n_eddies and sigma

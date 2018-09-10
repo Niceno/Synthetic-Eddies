@@ -15,46 +15,23 @@
   integer, parameter :: VTK = 9
 !==============================================================================!
 
+  !-----------------------------------------------------!
+  !   Set mode; if read from file, it is unstructured   !
+  !-----------------------------------------------------!
   msh % mode =  UNSTRUCTURED
 
-  open(VTK, file=trim(full_name), form='formatted')
+  !-------------------------------------------------!
+  !   Do the actual reading and memory allocation   !
+  !-------------------------------------------------!
+  call Read_Vtk_Mesh(msh, full_name)
 
-  !-----------------!
-  !   Skip header   !
-  !-----------------!
-  read(VTK,*) line;  read(VTK,*) line;  read(VTK,*) line;  read(VTK,*) line; 
-
-  !-------------------!
-  !   Nodes section   !
-  !-------------------!
-  read(VTK, '(a7,i6,a6)')  line(1:7), msh % n_nodes, line(41:47)
-
-  allocate(msh % yn(msh % n_nodes))
-  allocate(msh % zn(msh % n_nodes))
-
-  do n = 1, msh % n_nodes
-    read(VTK, *)  tmp, msh % yn(n), msh % zn(n)
-  end do
-
-  !-------------------!
-  !   Cells section   !
-  !-------------------!
-  read(VTK, '(a6,i6,a6)')  line(1:6), msh % n_cells, line(41:47)
-
-  allocate(msh % yc(msh % n_cells))
-  allocate(msh % zc(msh % n_cells))
-  allocate(msh % cells_nodes(4, msh % n_cells))
-
-  do c = 1, msh % n_cells
-    read(VTK, *)  k, msh % cells_nodes(1:4, c)
-  end do
-
-  close(VTK)
-
-  !----------------------------------!
-  !   Test if you read it properly   !
-  !----------------------------------!
+  ! Test if you read it properly
   call Save_Vtk_Mesh(msh, "test-mesh.vtk")
+
+  !---------------------------------------------!
+  !   Calculate grid's geometrical quantities   !
+  !---------------------------------------------!
+  call Mesh_Mod_Calculate_Geometry(msh)
 
   end subroutine
 
