@@ -1,3 +1,4 @@
+#-- ./Mat_Mul.f90
 #-- ./Save_Vtk_Flow.f90
 $(DIR_OBJECT)/Save_Vtk_Flow.o:\
 $(DIR_OBJECT)/Mesh_Mod.o \
@@ -5,21 +6,13 @@ Mesh_Mod/*.f90 \
 $(DIR_OBJECT)/Flow_Mod.o \
 Flow_Mod/*.f90 
 
-#-- ./At.f90
-#-- ./Main_Sem.f90
-$(DIR_OBJECT)/Main_Sem.o:\
-$(DIR_OBJECT)/Prof_Mod.o \
-Prof_Mod/*.f90 \
+#-- ./Eddy_Mod/Create.f90
+$(DIR_OBJECT)/Create.o:\
 $(DIR_OBJECT)/Mesh_Mod.o \
-Mesh_Mod/*.f90 \
-$(DIR_OBJECT)/Flow_Mod.o \
-Flow_Mod/*.f90 \
-$(DIR_OBJECT)/Eddy_Mod.o \
-Eddy_Mod/*.f90 
+Mesh_Mod/*.f90 
 
-#-- ./Write_Statistics.f90
-#-- ./Scale_Fluctuations.f90
-$(DIR_OBJECT)/Scale_Fluctuations.o:\
+#-- ./Statistics.f90
+$(DIR_OBJECT)/Statistics.o:\
 $(DIR_OBJECT)/Prof_Mod.o \
 Prof_Mod/*.f90 \
 $(DIR_OBJECT)/Mesh_Mod.o \
@@ -29,29 +22,7 @@ Flow_Mod/*.f90
 
 #-- ./Prof_Mod.f90
 $(DIR_OBJECT)/Prof_Mod.o:\
-Prof_Mod/*.f90 \
-$(DIR_OBJECT)/Mesh_Mod.o \
-Mesh_Mod/*.f90 
-
-#-- ./Var_Mod/Create.f90
-#-- ./Var_Mod.f90
-$(DIR_OBJECT)/Var_Mod.o:\
-Var_Mod/*.f90 \
-$(DIR_OBJECT)/Mesh_Mod.o \
-Mesh_Mod/*.f90 
-
-#-- ./Mesh_Mod/Create_From_File.f90
-#-- ./Mesh_Mod/Create_Cartesian.f90
-#-- ./Mesh_Mod/Calculate_Geometry.f90
-#-- ./Eddy_Mod/Create.f90
-#-- ./Statistics.f90
-$(DIR_OBJECT)/Statistics.o:\
-$(DIR_OBJECT)/Prof_Mod.o \
-Prof_Mod/*.f90 \
-$(DIR_OBJECT)/Mesh_Mod.o \
-Mesh_Mod/*.f90 \
-$(DIR_OBJECT)/Flow_Mod.o \
-Flow_Mod/*.f90 
+Prof_Mod/*.f90 
 
 #-- ./Flow_Mod.f90
 $(DIR_OBJECT)/Flow_Mod.o:\
@@ -62,52 +33,6 @@ Prof_Mod/*.f90 \
 $(DIR_OBJECT)/Mesh_Mod.o \
 Mesh_Mod/*.f90 \
 Flow_Mod/*.f90 
-
-#-- ./Eddy_Mod.f90
-$(DIR_OBJECT)/Eddy_Mod.o:\
-Eddy_Mod/*.f90 
-
-#-- ./Mesh_Mod.f90
-$(DIR_OBJECT)/Mesh_Mod.o:\
-Mesh_Mod/*.f90 
-
-#-- ./Read_Vtk_Mesh.f90
-$(DIR_OBJECT)/Read_Vtk_Mesh.o:\
-$(DIR_OBJECT)/Mesh_Mod.o \
-Mesh_Mod/*.f90 
-
-#-- ./Save_Vtk_Mesh.f90
-$(DIR_OBJECT)/Save_Vtk_Mesh.o:\
-$(DIR_OBJECT)/Mesh_Mod.o \
-Mesh_Mod/*.f90 
-
-#-- ./Meshes/Neu_2_Vtk.f90
-#-- ./Mat_Mul.f90
-#-- ./Generate_Fluctuations.f90
-$(DIR_OBJECT)/Generate_Fluctuations.o:\
-$(DIR_OBJECT)/Mesh_Mod.o \
-Mesh_Mod/*.f90 \
-$(DIR_OBJECT)/Flow_Mod.o \
-Flow_Mod/*.f90 \
-$(DIR_OBJECT)/Eddy_Mod.o \
-Eddy_Mod/*.f90 
-
-#-- ./Convect_Eddy.f90
-$(DIR_OBJECT)/Convect_Eddy.o:\
-$(DIR_OBJECT)/Mesh_Mod.o \
-Mesh_Mod/*.f90 \
-$(DIR_OBJECT)/Flow_Mod.o \
-Flow_Mod/*.f90 \
-$(DIR_OBJECT)/Eddy_Mod.o \
-Eddy_Mod/*.f90 
-
-#-- ./Cholesky.f90
-#-- ./Eddy_Setting.f90
-$(DIR_OBJECT)/Eddy_Setting.o:\
-$(DIR_OBJECT)/Mesh_Mod.o \
-Mesh_Mod/*.f90 \
-$(DIR_OBJECT)/Eddy_Mod.o \
-Eddy_Mod/*.f90 
 
 #-- ./Flow_Mod/Create.f90
 $(DIR_OBJECT)/Create.o:\
@@ -121,4 +46,75 @@ Prof_Mod/*.f90 \
 $(DIR_OBJECT)/Mesh_Mod.o \
 Mesh_Mod/*.f90 
 
+#-- ./Cholesky.f90
+#-- ./Scale_Fluctuations.f90
+$(DIR_OBJECT)/Scale_Fluctuations.o:\
+$(DIR_OBJECT)/Prof_Mod.o \
+Prof_Mod/*.f90 \
+$(DIR_OBJECT)/Mesh_Mod.o \
+Mesh_Mod/*.f90 \
+$(DIR_OBJECT)/Flow_Mod.o \
+Flow_Mod/*.f90 
+
+#-- ./Var_Mod/Create.f90
+#-- ./Mesh_Mod/Create_Cartesian.f90
+#-- ./Mesh_Mod/Calculate_Geometry.f90
+#-- ./Mesh_Mod/Create_From_File.f90
+#-- ./Meshes/Neu_2_Vtk.f90
+#-- ./Main_Sem.f90
+$(DIR_OBJECT)/Main_Sem.o:\
+$(DIR_OBJECT)/Prof_Mod.o \
+Prof_Mod/*.f90 \
+$(DIR_OBJECT)/Mesh_Mod.o \
+Mesh_Mod/*.f90 \
+$(DIR_OBJECT)/Flow_Mod.o \
+Flow_Mod/*.f90 \
+$(DIR_OBJECT)/Eddy_Mod.o \
+Eddy_Mod/*.f90 
+
 #-- ./Prof_Mod/Create.f90
+#-- ./Eddy_Mod.f90
+$(DIR_OBJECT)/Eddy_Mod.o:\
+$(DIR_OBJECT)/Mesh_Mod.o \
+Mesh_Mod/*.f90 \
+Eddy_Mod/*.f90 
+
+#-- ./At.f90
+#-- ./Convect_Eddy.f90
+$(DIR_OBJECT)/Convect_Eddy.o:\
+$(DIR_OBJECT)/Mesh_Mod.o \
+Mesh_Mod/*.f90 \
+$(DIR_OBJECT)/Flow_Mod.o \
+Flow_Mod/*.f90 \
+$(DIR_OBJECT)/Eddy_Mod.o \
+Eddy_Mod/*.f90 
+
+#-- ./Mesh_Mod.f90
+$(DIR_OBJECT)/Mesh_Mod.o:\
+Mesh_Mod/*.f90 
+
+#-- ./Save_Vtk_Mesh.f90
+$(DIR_OBJECT)/Save_Vtk_Mesh.o:\
+$(DIR_OBJECT)/Mesh_Mod.o \
+Mesh_Mod/*.f90 
+
+#-- ./Read_Vtk_Mesh.f90
+$(DIR_OBJECT)/Read_Vtk_Mesh.o:\
+$(DIR_OBJECT)/Mesh_Mod.o \
+Mesh_Mod/*.f90 
+
+#-- ./Var_Mod.f90
+$(DIR_OBJECT)/Var_Mod.o:\
+Var_Mod/*.f90 \
+$(DIR_OBJECT)/Mesh_Mod.o \
+Mesh_Mod/*.f90 
+
+#-- ./Generate_Fluctuations.f90
+$(DIR_OBJECT)/Generate_Fluctuations.o:\
+$(DIR_OBJECT)/Mesh_Mod.o \
+Mesh_Mod/*.f90 \
+$(DIR_OBJECT)/Flow_Mod.o \
+Flow_Mod/*.f90 \
+$(DIR_OBJECT)/Eddy_Mod.o \
+Eddy_Mod/*.f90 
+

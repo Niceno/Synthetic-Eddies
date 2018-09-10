@@ -81,8 +81,8 @@ endif
 #-------------
 #   Modules
 #-------------
-SRC_MOD = Eddy_Mod.f90		\
-          Mesh_Mod.f90		\
+SRC_MOD = Mesh_Mod.f90		\
+          Eddy_Mod.f90		\
           Var_Mod.f90		\
           Prof_Mod.f90		\
           Flow_Mod.f90
@@ -92,7 +92,6 @@ SRC_MOD = Eddy_Mod.f90		\
 #---------------
 SRC_FUN = Cholesky.f90			\
           Convect_Eddy.f90		\
-          Eddy_Setting.f90		\
           Generate_Fluctuations.f90	\
           Main_Sem.f90			\
           Mat_Mul.f90			\
