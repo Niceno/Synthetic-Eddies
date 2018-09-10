@@ -1,5 +1,5 @@
 !==============================================================================!
-  subroutine Statistics(flw, prf, ts)
+  subroutine Statistics(flw, ts)
 !------------------------------------------------------------------------------!
 !   Make a statistics about flows including mean and rms data                  !
 !------------------------------------------------------------------------------!
@@ -11,7 +11,6 @@
   implicit none
 !---------------------------------[Arguments]----------------------------------!
   type(Flow_Type) :: flw
-  type(Prof_Type) :: prf
   integer         :: ts
 !-----------------------------------[Locals]-----------------------------------!
   integer                 :: j, k
@@ -38,36 +37,59 @@
                                 + flw % t     % com(j,k)) / ts
 
       ! Mean: uu, vv, ww, tt
-      flw % uu_avg % com(j,k) = (   flw % uu_avg % com(j,k) * (ts-1)           &
-                                 + (flw % u % com(j,k) - prf % u(j))**2  ) / ts
-      flw % vv_avg % com(j,k) = (   flw % vv_avg % com(j,k) * (ts-1)           &
-                                 + (flw % v % com(j,k) - prf % v(j))**2  ) / ts
-      flw % ww_avg % com(j,k) = (   flw % ww_avg % com(j,k) * (ts-1)           &
-                                 + (flw % w % com(j,k) - prf % w(j))**2  ) / ts
-      flw % tt_avg % com(j,k) = (   flw % tt_avg % com(j,k) * (ts-1)           &
-                                 + (flw % t % com(j,k) - prf % t(j))**2  ) / ts
+      flw % uu_avg % com(j,k) = (   flw % uu_avg % com(j,k) * (ts-1)      &
+                                 + (flw % u      % com(j,k)               &
+                                  - flw % u_avg  % dns(j,k))**2  ) / ts
+
+      flw % vv_avg % com(j,k) = (   flw % vv_avg % com(j,k) * (ts-1)      &
+                                 + (flw % v      % com(j,k)               &
+                                 -  flw % v_avg  % dns(j,k))**2  ) / ts
+
+      flw % ww_avg % com(j,k) = (   flw % ww_avg % com(j,k) * (ts-1)      &
+                                 + (flw % w      % com(j,k)               &
+                                 -  flw % w_avg  % dns(j,k))**2  ) / ts
+
+      flw % tt_avg % com(j,k) = (   flw % tt_avg % com(j,k) * (ts-1)      &
+                                 + (flw % t      % com(j,k)               &
+                                  - flw % t_avg  % dns(j,k))**2  ) / ts
 
       ! Mean: uv, uw, vw
-      flw % uv_avg % com(j,k) = (    flw % uv_avg % com(j,k) * (ts-1)          &
-                              + (   (flw % u % com(j,k) - prf % u(j))          &
-                                  * (flw % v % com(j,k) - prf % v(j)) ) ) / ts
-      flw % uw_avg % com(j,k) = (    flw % uw_avg % com(j,k) * (ts-1)          &
-                              + (   (flw % u % com(j,k) - prf % u(j))          &
-                                  * (flw % w % com(j,k) - prf % w(j)) ) ) / ts
-      flw % vw_avg % com(j,k) = (    flw % vw_avg % com(j,k) * (ts-1)          &
-                              + (   (flw % v % com(j,k) - prf % v(j))          &
-                                  * (flw % w % com(j,k) - prf % w(j)) ) ) / ts
+      flw % uv_avg % com(j,k) = (    flw % uv_avg % com(j,k) * (ts-1)     &
+                              + (   (flw % u      % com(j,k)              &
+                                   - flw % u_avg  % dns(j,k))             &
+                                  * (flw % v      % com(j,k)              &
+                                   - flw % v_avg  % dns(j,k)) ) ) / ts
+
+      flw % uw_avg % com(j,k) = (    flw % uw_avg % com(j,k) * (ts-1)     &
+                              + (   (flw % u      % com(j,k)              &
+                                   - flw % u_avg  % dns(j,k))             &
+                                  * (flw % w      % com(j,k)              &
+                                   - flw % w_avg  % dns(j,k)) ) ) / ts
+
+      flw % vw_avg % com(j,k) = (    flw % vw_avg % com(j,k) * (ts-1)     &
+                              + (   (flw % v      % com(j,k)              &
+                                   - flw % v_avg  % dns(j,k))             &
+                                  * (flw % w      % com(j,k)              &
+                                   - flw % w_avg  % dns(j,k)) ) ) / ts
 
       ! Mean: ut, vt, wt
-      flw % ut_avg % com(j,k) = (    flw % ut_avg % com(j,k) * (ts-1)          &
-                              + (   (flw % u % com(j,k) - prf % u(j))          &
-                                  * (flw % t % com(j,k) - prf % t(j)) ) ) / ts
-      flw % vt_avg % com(j,k) = (    flw % vt_avg % com(j,k) * (ts-1)          &
-                              + (   (flw % v % com(j,k) - prf % v(j))          &
-                                  * (flw % t % com(j,k) - prf % t(j)) ) ) / ts
-      flw % wt_avg % com(j,k) = (    flw % wt_avg % com(j,k) * (ts-1)          &
-                              + (   (flw % w % com(j,k) - prf % w(j))          &
-                                  * (flw % t % com(j,k) - prf % t(j)) ) ) / ts
+      flw % ut_avg % com(j,k) = (    flw % ut_avg % com(j,k) * (ts-1)     &
+                              + (   (flw % u      % com(j,k)              &
+                                   - flw % u_avg  % dns(j,k))             &
+                                  * (flw % t      % com(j,k)              &
+                                   - flw % t_avg  % dns(j,k)) ) ) / ts
+
+      flw % vt_avg % com(j,k) = (    flw % vt_avg % com(j,k) * (ts-1)     &
+                              + (   (flw % v      % com(j,k)              &
+                                   - flw % v_avg  % dns(j,k))             &
+                                  * (flw % t      % com(j,k)              &
+                                   - flw % t_avg  % dns(j,k)) ) ) / ts
+
+      flw % wt_avg % com(j,k) = (    flw % wt_avg % com(j,k) * (ts-1)     &
+                              + (   (flw % w      % com(j,k)              &
+                                   - flw % w_avg  % dns(j,k))             &
+                                  * (flw % t      % com(j,k)              &
+                                   - flw % t_avg  % dns(j,k)) ) ) / ts
     end do
   end do
 

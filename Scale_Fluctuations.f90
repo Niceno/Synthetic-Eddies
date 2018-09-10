@@ -1,5 +1,5 @@
 !==============================================================================!
-  subroutine Scale_Fluctuations(flw, prf, ts)
+  subroutine Scale_Fluctuations(flw, ts)
 !------------------------------------------------------------------------------!
 !   Combine slice mean,rms data with generated fluctuation variables           !
 !------------------------------------------------------------------------------!
@@ -11,7 +11,6 @@
   implicit none
 !---------------------------------[Arguments]----------------------------------!
   type(Flow_Type) :: flw
-  type(Prof_Type) :: prf
   integer         :: ts
 !-----------------------------------[Locals]-----------------------------------!
   integer                 :: i, j, k
@@ -35,19 +34,19 @@
       u_mean(1:4,1)  = 0.0
       u_tmp(1:4,1)   = 0.0
 
-      u_mean(1:4,1) = (/ prf % u(j),  prf % v(j),   &
-                         prf % w(j),  prf % t(j)  /)
+      u_mean(1:4,1) = (/ flw % u_avg % dns(j,k),  flw % v_avg % dns(j,k),   &
+                         flw % w_avg % dns(j,k),  flw % t_avg % dns(j,k)  /)
       u_tmp (1:4,1) = (/ flw % u % raw(j,k), flw % v % raw(j,k),  &
                          flw % w % raw(j,k), flw % t % raw(j,k) /)
 
-      r_loc(1,1:4)  = (/ prf % rs(1,j), prf % rs(4,j),  &
-                         prf % rs(5,j), prf % ts(2,j) /)
-      r_loc(2,1:4)  = (/ prf % rs(4,j), prf % rs(2,j),  &
-                         prf % rs(6,j), prf % ts(3,j) /)
-      r_loc(3,1:4)  = (/ prf % rs(5,j), prf % rs(6,j),  &
-                         prf % rs(3,j), prf % ts(4,j) /)
-      r_loc(4,1:4)  = (/ prf % ts(2,j), prf % ts(3,j),  &
-                         prf % ts(4,j), prf % ts(1,j) /)
+      r_loc(1,1:4)  = (/ flw % uu_avg % dns(j,k), flw % uv_avg % dns(j,k),  &
+                         flw % uw_avg % dns(j,k), flw % ut_avg % dns(j,k) /)
+      r_loc(2,1:4)  = (/ flw % uv_avg % dns(j,k), flw % vv_avg % dns(j,k),  &
+                         flw % vw_avg % dns(j,k), flw % vt_avg % dns(j,k) /)
+      r_loc(3,1:4)  = (/ flw % uw_avg % dns(j,k), flw % vw_avg % dns(j,k),  &
+                         flw % ww_avg % dns(j,k), flw % wt_avg % dns(j,k) /)
+      r_loc(4,1:4)  = (/ flw % ut_avg % dns(j,k), flw % vt_avg % dns(j,k),  &
+                         flw % wt_avg % dns(j,k), flw % tt_avg % dns(j,k) /)
 
       call Cholesky(a,r_loc,4)
       call Mat_Mul(a,u_tmp,u_fluc,4,1,4)

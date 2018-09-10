@@ -18,8 +18,9 @@
   type(Mesh_Type) :: mesh
   type(Flow_Type) :: flow
   integer         :: ts
+  integer         :: j
 !------------------------------[Local parameters]------------------------------!
-  integer, parameter :: N_DT = 300
+  integer, parameter :: N_DT = 12000
   real,    parameter :: DT   = 5.0e-3
 !==============================================================================!
 
@@ -32,7 +33,7 @@
   call Prof_Mod_Create(prof, mesh % ny - 1)           ! profile
   call Eddy_Mod_Create(eddy, 1024, 0.2)               ! n_eddies and sigma
 
-  call Prof_Mod_Read(prof, mesh, 'input_line_tmp.dat')  ! this should be part of Prof_Mod_Create
+  call Prof_Mod_Read(prof, flow, 'input_line_tmp.dat')  ! this should be part of Prof_Mod_Create
   call Eddy_Setting(eddy, mesh)
 
   !---------------!
@@ -42,10 +43,10 @@
 
     write(*,'(a,i5,a,i5)') ' # Time step ', ts, ' from ', n_dt
 
-    call Generate_Fluctuations(eddy, flow, ts)
-    call Scale_Fluctuations   (flow, prof, ts)
-    call Convect_Eddy         (eddy, flow, DT)
-    call Statistics           (flow, prof, ts)
+    call Generate_Fluctuations(flow, eddy, ts)
+    call Scale_Fluctuations   (flow, ts)
+    call Convect_Eddy         (flow, eddy, DT)
+    call Statistics           (flow, ts)
 
   end do
 
