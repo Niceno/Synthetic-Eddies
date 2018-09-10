@@ -1,5 +1,5 @@
 !==============================================================================!
-  subroutine Generate_Fluctuations(flw, ed, ts)
+  subroutine Generate_Fluctuations(flw, ed)
 !------------------------------------------------------------------------------!
 !   Generate fluctuations without combining mean and rms data                  !
 !------------------------------------------------------------------------------!
@@ -12,12 +12,10 @@
 !---------------------------------[Arguments]----------------------------------!
   type(Flow_Type) :: flw
   type(Eddy_Type) :: ed
-  integer         :: ts
 !-----------------------------------[Locals]-----------------------------------!
   integer                 :: e, j, k
   real                    :: x0, y0, z0, f, v_b
   real                    :: y_s, y_e, z_s, z_e, s
-  character(len=80)       :: file_name
   type(Mesh_Type), target :: msh
 !==============================================================================!
 
@@ -53,10 +51,10 @@
           !--------------------!
           !   Shape function   !
           !--------------------!
-          if ( abs(x0) <=1 .and. abs(y0) <=1 .and. abs(z0) <=1) then
-            f = sqrt(1.5) * (1- abs(x0)) *                        &
-                sqrt(1.5) * (1- abs(y0)) *                        &
-                sqrt(1.5) * (1- abs(z0))
+          if (abs(x0)<=1.0 .and. abs(y0)<=1.0 .and. abs(z0)<=1.0) then
+            f = sqrt(1.5) * (1.0 - abs(x0)) *                     &
+                sqrt(1.5) * (1.0 - abs(y0)) *                     &
+                sqrt(1.5) * (1.0 - abs(z0))
 
             flw % u % raw(At(j,k)) = flw % u % raw(At(j,k)) +     &
                            sqrt(v_b/ed % len(e)**3) *             &

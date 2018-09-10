@@ -8,7 +8,7 @@
   type(Prof_Type)  :: prf
   character(len=*) :: profile_file_name
 !-----------------------------------[Locals]-----------------------------------!
-  integer            :: i, j, k
+  integer            :: j
   character(len=256) :: header
 !------------------------------[Local parameters]------------------------------!
   integer, parameter :: PFU = 100
@@ -21,7 +21,7 @@
   !   Skip header   !
   !-----------------!
   open(PFU, file=profile_file_name, form='formatted', status='old')
-  do i = 1, 7
+  do j = 1, 7
     read(PFU,*) header
   end do
 

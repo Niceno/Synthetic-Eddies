@@ -16,8 +16,7 @@
   logical, optional :: avg
   logical, optional :: dns
 !-----------------------------------[Locals]-----------------------------------!
-  integer           :: e, j, k, l, var, n_var
-  real              :: x0, y0, z0, f
+  integer           :: j, k, l, var, n_var
   character(len=80) :: full_name
   type(Mesh_Type), target :: msh
 !==============================================================================!

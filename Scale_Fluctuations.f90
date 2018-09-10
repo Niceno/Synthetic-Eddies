@@ -1,5 +1,5 @@
 !==============================================================================!
-  subroutine Scale_Fluctuations(flw, ts)
+  subroutine Scale_Fluctuations(flw)
 !------------------------------------------------------------------------------!
 !   Combine slice mean,rms data with generated fluctuation variables           !
 !------------------------------------------------------------------------------!
@@ -11,13 +11,11 @@
   implicit none
 !---------------------------------[Arguments]----------------------------------!
   type(Flow_Type) :: flw
-  integer         :: ts
 !-----------------------------------[Locals]-----------------------------------!
-  integer                 :: i, j, k
+  integer                 :: j, k
   real                    :: r_loc(4,4), a(4,4),        &
                              u_ins(4,1), u_mean(4,1),   &
                              u_fluc(4,1), u_tmp(4,1)
-  character(len=80)       :: file_name
   type(Mesh_Type), target :: msh
 !==============================================================================!
 

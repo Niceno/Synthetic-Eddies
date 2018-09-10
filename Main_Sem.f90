@@ -20,7 +20,6 @@
   type(Mesh_Type) :: mesh
   type(Flow_Type) :: flow
   integer         :: ts
-  integer         :: j
 !------------------------------[Local parameters]------------------------------!
   integer, parameter :: N_DT = 12000
   real,    parameter :: DT   = 5.0e-3
@@ -48,8 +47,8 @@
 
     write(*,'(a,i5,a,i5)') ' # Time step ', ts, ' from ', n_dt
 
-    call Generate_Fluctuations(flow, eddy, ts)
-    call Scale_Fluctuations   (flow, ts)
+    call Generate_Fluctuations(flow, eddy)
+    call Scale_Fluctuations   (flow)
     call Convect_Eddy         (flow, eddy, DT)
     call Statistics           (flow, ts)
 
@@ -64,11 +63,5 @@
     end if
 
   end do
-
-  !------------------------------!
-  !    At the end of the run,    !
-  !   write out the statistics   !
-  !------------------------------!
-  call Write_Statistics()
 
   end program

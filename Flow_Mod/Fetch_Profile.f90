@@ -12,8 +12,7 @@
   type(Flow_Type)  :: flw
   type(Prof_Type)  :: prf
 !-----------------------------------[Locals]-----------------------------------!
-  integer                  :: i, j, k
-  character(len=256)       :: header
+  integer                  :: j, k
   type(Mesh_Type), pointer :: msh
 !==============================================================================!
 
