@@ -36,6 +36,10 @@
   call Eddy_Mod_Create(eddy, 1024, 0.2)               ! n_eddies and sigma
 
   call Prof_Mod_Read(prof, flow, 'input_line_tmp.dat')  ! this should be part of Prof_Mod_Create
+
+  ! Save only the interpolated DNS database
+  call Save_Vtk_Flow(flow, 'dns-from-file', 0, dns=.true.)
+
   call Eddy_Setting(eddy, mesh)
 
   !---------------!
@@ -50,9 +54,16 @@
     call Convect_Eddy         (flow, eddy, DT)
     call Statistics           (flow, ts)
 
+    ! For making movies
     if(mod(ts,10) .eq. 0) then
-      call Save_Vtk_Flow(flow, 'flow', ts, raw=.true., avg=.true.)
+      call Save_Vtk_Flow(flow, 'com-and-raw', ts, com=.true., raw=.true.)
     end if
+
+    ! To see statistics
+    if(mod(ts,1000) .eq. 0) then
+      call Save_Vtk_Flow(flow, 'avg-and-dns', ts, avg=.true., dns=.true.)
+    end if
+
   end do
 
   !------------------------------!

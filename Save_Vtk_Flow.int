@@ -1,12 +1,13 @@
 !==============================================================================!
   interface
 !------------------------------------------------------------------------------!
-    subroutine Save_Vtk_Flow(flw, stem_name, ts, raw, avg, dns)
+    subroutine Save_Vtk_Flow(flw, stem_name, ts, com, raw, avg, dns)
       use Flow_Mod, only: Flow_Type
       implicit none
       type(Flow_Type)   :: flw
       character(len=*)  :: stem_name
       integer           :: ts
+      logical, optional :: com  ! include "com" values
       logical, optional :: raw  ! include "raw" values
       logical, optional :: avg  ! include time-averaged values
       logical, optional :: dns  ! include DNS values
