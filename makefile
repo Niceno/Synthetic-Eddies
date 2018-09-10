@@ -29,8 +29,17 @@ $(info #-----------------------------------------------------------------------)
 ifeq ($(FORTRAN), gnu)
   FC = gfortran
   ifeq ($(DEBUG),yes)
-    OPT_COMP = -J $(DIR_MODULE) -fdefault-real-8  -O0 -g \
-               -fcheck=all
+    OPT_COMP = -J $(DIR_MODULE) -fdefault-real-8  -O0 -g                    \
+               -ffixed-line-length-80 -fcheck=all -fwhole-file -fbacktrace  \
+               -ffpe-trap=invalid,zero,overflow                             \
+               -fimplicit-none -finit-real=nan                              \
+               -Wall -Wextra -Waliasing -Wampersand                         \
+               -Wc-binding-type -Wcharacter-truncation -Wline-truncation    \
+               -Wconversion -Wconversion-extra -Wintrinsics-std             \
+               -Wreal-q-constant -Wsurprising -Wtabs -Wunderflow            \
+               -Wintrinsic-shadow -Wunused-parameter -Walign-commons        \
+               -Wfunction-elimination -Wrealloc-lhs -Wrealloc-lhs-all       \
+               -Wcompare-reals -Wtarget-lifetime -Wpedantic -fstack-check
   else
     OPT_COMP = -J $(DIR_MODULE) -fdefault-real-8  -O3
   endif 
@@ -91,8 +100,7 @@ SRC_FUN = Cholesky.f90			\
           Save_Vtk_Flow.f90		\
           Save_Vtk_Mesh.f90		\
           Scale_Fluctuations.f90	\
-          Statistics.f90		\
-          Write_Statistics.f90
+          Statistics.f90
 
 #----------------------------------------------------------------------
 #   List of objects generated from the list of modules and functions  
