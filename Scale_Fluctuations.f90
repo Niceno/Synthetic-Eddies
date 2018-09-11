@@ -14,8 +14,8 @@
 !-----------------------------------[Locals]-----------------------------------!
   integer                 :: c
   real                    :: r_loc(4,4), a(4,4),        &
-                             u_ins(4,1), u_mean(4,1),   &
-                             u_fluc(4,1), u_tmp(4,1)
+                             u_ins(4), u_mean(4),   &
+                             u_fluc(4), u_tmp(4)
   type(Mesh_Type), target :: msh
 !==============================================================================!
 
@@ -25,21 +25,21 @@
   ! Browse through all cells
   do c = 1, msh % n_cells
 
-    a(1:4,1:4)     = 0.0
-    r_loc(1:4,1:4) = 0.0
-    u_ins(1:4,1)   = 0.0
-    u_fluc(1:4,1)  = 0.0
-    u_mean(1:4,1)  = 0.0
-    u_tmp(1:4,1)   = 0.0
+    a     (:,:) = 0.0
+    r_loc (:,:) = 0.0
+    u_ins (:)   = 0.0
+    u_fluc(:)   = 0.0
+    u_mean(:)   = 0.0
+    u_tmp (:)   = 0.0
 
-    u_mean(1:4,1) = (/ flw % u_avg % dns(c),     &
-                       flw % v_avg % dns(c),     &
-                       flw % w_avg % dns(c),     &
-                       flw % t_avg % dns(c)  /)
-    u_tmp (1:4,1) = (/ flw % u % raw(c),         &
-                       flw % v % raw(c),         &
-                       flw % w % raw(c),         &
-                       flw % t % raw(c) /)
+    u_mean(1:4) = (/ flw % u_avg % dns(c),     &
+                     flw % v_avg % dns(c),     &
+                     flw % w_avg % dns(c),     &
+                     flw % t_avg % dns(c)  /)
+    u_tmp (1:4) = (/ flw % u % raw(c),         &
+                     flw % v % raw(c),         &
+                     flw % w % raw(c),         &
+                     flw % t % raw(c) /)
 
     r_loc(1,1:4)  = (/ flw % uu_avg % dns(c),    &
                        flw % uv_avg % dns(c),    &
@@ -58,15 +58,15 @@
                        flw % wt_avg % dns(c),    &
                        flw % tt_avg % dns(c) /)
 
-    call Cholesky(a,r_loc,4)
-    call Mat_Mul(a,u_tmp,u_fluc,4,1,4)
+    call Cholesky(a, r_loc, 4)
+    call Mat_Mul(a, u_tmp, u_fluc, 4, 1, 4)
 
-    u_ins(1:4,1) = u_mean(1:4,1) + u_fluc(1:4,1)
+    u_ins(1:4) = u_mean(1:4) + u_fluc(1:4)
 
-    flw % u % com(c) = u_ins(1,1)
-    flw % v % com(c) = u_ins(2,1)
-    flw % w % com(c) = u_ins(3,1)
-    flw % t % com(c) = u_ins(4,1)
+    flw % u % com(c) = u_ins(1)
+    flw % v % com(c) = u_ins(2)
+    flw % w % com(c) = u_ins(3)
+    flw % t % com(c) = u_ins(4)
 
   end do
 

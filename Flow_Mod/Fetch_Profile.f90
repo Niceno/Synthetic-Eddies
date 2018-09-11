@@ -4,7 +4,7 @@
 !   Copy data read by profile "prf" into the flow "flw"                        !
 !------------------------------------------------------------------------------!
 !----------------------------------[Modules]-----------------------------------!
-  use Mesh_Mod, only: Mesh_Type, STRUCTURED, UNSTRUCTURED
+  use Mesh_Mod, only: Mesh_Type
   use Prof_Mod, only: Prof_Type
 !------------------------------------------------------------------------------!
   implicit none
