@@ -52,7 +52,7 @@
 
   do k = 1, nz - 1
     zc(k) = ( zn(k) + zn(k+1) ) * 0.5
-    dz(k) = ( zn(k+1) - zn(j) )
+    dz(k) = ( zn(k+1) - zn(k) )
   end do
 
   ! Copy linear node coordinates to full mesh coordinates
