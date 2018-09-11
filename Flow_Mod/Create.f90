@@ -10,6 +10,9 @@
   type(Mesh_Type), target :: msh
 !==============================================================================!
 
+  write(*,*) '#==================================='
+  write(*,*) '# Flow creation process started ... '
+
   ! Store mesh for which the variable is defined
   flw % pnt_mesh => msh
 
@@ -40,5 +43,9 @@
   call Var_Mod_Create(flw % ut_avg, msh)
   call Var_Mod_Create(flw % vt_avg, msh)
   call Var_Mod_Create(flw % wt_avg, msh)
+
+  write(*,*) '# ... eddy creation process ended.'
+  write(*,*) '#-----------------------------------'
+  write(*,*) ''
 
   end subroutine

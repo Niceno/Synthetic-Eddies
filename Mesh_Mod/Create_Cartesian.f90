@@ -10,6 +10,9 @@
   real, allocatable :: yn(:), zn(:), yc(:), zc(:), dy(:), dz(:)
 !==============================================================================!
 
+  write(*,*) '#==================================='
+  write(*,*) '# Mesh creation process started ... '
+
   msh % mode     =  STRUCTURED
 
   ! Allocate local memory
@@ -73,6 +76,10 @@
       msh % area(c) = dy(j) * dz(k)
     end do
   end do
+
+  write(*,*) '# ... mesh creation process ended.'
+  write(*,*) '#-----------------------------------'
+  write(*,*) ''
 
   end subroutine
 

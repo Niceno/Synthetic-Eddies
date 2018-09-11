@@ -14,8 +14,8 @@
   integer, parameter :: PFU = 100
 !==============================================================================!
 
-  write(*,*) '#=================================='
-  write(*,*) '# Profile reading started ...'
+  write(*,*) '#======================================'
+  write(*,*) '# Profile creation process started ... '
 
   !-----------------!
   !   Skip header   !
@@ -66,8 +66,8 @@
                 prf % ts(4,j)        ! 15  wt ~ zero
   end do
 
-  write(*,*) '# ... profile reading is completed'
-  write(*,*) '#----------------------------------'
+  write(*,*) '# ... profile creation process ended.'
+  write(*,*) '#--------------------------------------'
   write(*,*) ''
 
   close(PFU)
