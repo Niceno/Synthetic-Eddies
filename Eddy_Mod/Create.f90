@@ -13,15 +13,20 @@
   integer         :: n
   real            :: sig
 !-----------------------------------[Locals]-----------------------------------!
-  integer :: e
-  real    :: y_s, y_e, z_s, z_e
-  real    :: int_x(1:ed % n_eddies), int_y(1:ed % n_eddies),  &
-             int_z(1:ed % n_eddies), int_t(1:ed % n_eddies),  &
-             tmp(1:3)
+  integer           :: e
+  real              :: y_s, y_e, z_s, z_e
+  real, allocatable :: int_x(:), int_y(:),  &
+                       int_z(:), int_t(:)
+  real              :: tmp(1:3)
 !==============================================================================!
 
   write(*,*) '#==================================='
   write(*,*) '# Eddy creation process started ... '
+
+  allocate(int_x(n)); int_x(:) = 0.0
+  allocate(int_y(n)); int_y(:) = 0.0
+  allocate(int_z(n)); int_z(:) = 0.0
+  allocate(int_t(n)); int_t(:) = 0.0
 
   ! Store mesh for which the variable is defined
   ed % n_eddies = n

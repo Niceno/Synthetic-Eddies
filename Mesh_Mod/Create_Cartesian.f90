@@ -25,7 +25,7 @@
   allocate(msh % zc(msh % nz - 1))
 
   ! Initialize "y" coordinates, they range from zero to two
-  do j = 1, msh % nz
+  do j = 1, msh % ny
     msh % yn(j) = (j-1) * 2.00 / (msh % ny-1)
   end do
 
