@@ -19,9 +19,6 @@
   !-------------------------------------------------!
   call Read_Vtk_Mesh(msh, full_name)
 
-  ! Test if you read it properly
-  call Save_Vtk_Mesh(msh, "test-mesh.vtk")
-
   !---------------------------------------------!
   !   Calculate grid's geometrical quantities   !
   !---------------------------------------------!
