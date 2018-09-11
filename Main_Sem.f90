@@ -13,7 +13,7 @@
 !------------------------------------------------------------------------------!
   implicit none
 !----------------------------------[Calling]-----------------------------------!
-  include 'Save_Vtk_Flow.int'
+  include 'Save_Vtk.int'
 !-----------------------------------[Locals]-----------------------------------!
   type(Eddy_Type) :: eddy
   type(Prof_Type) :: prof
@@ -36,7 +36,7 @@
 
   ! Copy DNS profiles to numerical mesh, and plot what you obtained
   call Flow_Mod_Fetch_Profile(flow, prof)
-  call Save_Vtk_Flow(flow, 'dns-from-file', 0, dns=.true.)
+  call Save_Vtk(flow, 'dns-from-file', dns=.true.)
 
   !---------------!
   !   Time loop   !
@@ -52,12 +52,12 @@
 
     ! For making movies
     if(mod(ts,10) .eq. 0) then
-      call Save_Vtk_Flow(flow, 'com-and-raw', ts, com=.true., raw=.true.)
+      call Save_Vtk(flow, 'com-and-raw', ts=ts, com=.true., raw=.true.)
     end if
 
     ! To see statistics
     if(mod(ts,1000) .eq. 0) then
-      call Save_Vtk_Flow(flow, 'avg-and-dns', ts, avg=.true., dns=.true.)
+      call Save_Vtk(flow, 'avg-and-dns', ts=ts, avg=.true., dns=.true.)
     end if
 
   end do
