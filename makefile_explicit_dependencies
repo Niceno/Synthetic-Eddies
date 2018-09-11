@@ -1,11 +1,4 @@
 #-- ./Mat_Mul.f90
-#-- ./Save_Vtk_Flow.f90
-$(DIR_OBJECT)/Save_Vtk_Flow.o:\
-$(DIR_OBJECT)/Mesh_Mod.o \
-Mesh_Mod/*.f90 \
-$(DIR_OBJECT)/Flow_Mod.o \
-Flow_Mod/*.f90 
-
 #-- ./Eddy_Mod/Create.f90
 $(DIR_OBJECT)/Create.o:\
 $(DIR_OBJECT)/Mesh_Mod.o \
@@ -60,6 +53,14 @@ Flow_Mod/*.f90
 #-- ./Mesh_Mod/Create_Cartesian.f90
 #-- ./Mesh_Mod/Calculate_Geometry.f90
 #-- ./Mesh_Mod/Create_From_File.f90
+#-- ./.git/objects/28/b60f6a45041684973f909e91ef34c1d87e0e11
+#-- ./Save_Vtk.f90
+$(DIR_OBJECT)/Save_Vtk.o:\
+$(DIR_OBJECT)/Mesh_Mod.o \
+Mesh_Mod/*.f90 \
+$(DIR_OBJECT)/Flow_Mod.o \
+Flow_Mod/*.f90 
+
 #-- ./Meshes/Neu_2_Vtk.f90
 #-- ./Main_Sem.f90
 $(DIR_OBJECT)/Main_Sem.o:\
@@ -79,7 +80,6 @@ $(DIR_OBJECT)/Mesh_Mod.o \
 Mesh_Mod/*.f90 \
 Eddy_Mod/*.f90 
 
-#-- ./At.f90
 #-- ./Convect_Eddy.f90
 $(DIR_OBJECT)/Convect_Eddy.o:\
 $(DIR_OBJECT)/Mesh_Mod.o \
@@ -91,11 +91,6 @@ Eddy_Mod/*.f90
 
 #-- ./Mesh_Mod.f90
 $(DIR_OBJECT)/Mesh_Mod.o:\
-Mesh_Mod/*.f90 
-
-#-- ./Save_Vtk_Mesh.f90
-$(DIR_OBJECT)/Save_Vtk_Mesh.o:\
-$(DIR_OBJECT)/Mesh_Mod.o \
 Mesh_Mod/*.f90 
 
 #-- ./Read_Vtk_Mesh.f90
