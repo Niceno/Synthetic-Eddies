@@ -16,7 +16,7 @@
   logical, optional :: avg
   logical, optional :: dns
 !-----------------------------------[Locals]-----------------------------------!
-  integer           :: j, k, l, var, n_var
+  integer           :: j, k, l, c, n, var, n_var
   character(len=80) :: full_name
   type(Mesh_Type), target :: msh
 !==============================================================================!
@@ -79,12 +79,16 @@
   write(1, '(a,i6,a)') 'X_COORDINATES',  1, ' float'
   write(1, '(a)')      '0.0'
   write(1, '(a,i6,a)') 'Y_COORDINATES', msh % ny, ' float'
+  k = 1
   do j = 1, msh % ny
-    write(1, '(es12.4)') msh % yn(j)
+    n = (k - 1) * msh % ny + j        ! find linear address for the node
+    write(1, '(es12.4)') msh % yn(n)
   end do
   write(1, '(a,i6,a)') 'Z_COORDINATES', msh % nz, ' float'
+  j = 1
   do k = 1, msh % nz
-    write(1, '(es12.4)') msh % zn(k)
+    n = (k - 1) * msh % ny + j        ! find linear address for the node
+    write(1, '(es12.4)') msh % zn(n)
   end do
 
   !---------------!
@@ -111,19 +115,17 @@
           case(4)
             write(1, '(a,i6,a)') 'com-T  1', msh % n_cells, ' float'
         end select
-        do k = 1, msh % nz - 1
-          do j = 1, msh % ny - 1
-            select case(var)
-              case(1)
-                write(1, '(es12.4)') flw % u % com(At(j,k))
-              case(2)
-                write(1, '(es12.4)') flw % v % com(At(j,k))
-              case(3)
-                write(1, '(es12.4)') flw % w % com(At(j,k))
-              case(4)
-                write(1, '(es12.4)') flw % t % com(At(j,k))
-            end select
-          end do
+        do c = 1, msh % n_cells
+          select case(var)
+            case(1)
+              write(1, '(es12.4)') flw % u % com(c)
+            case(2)
+              write(1, '(es12.4)') flw % v % com(c)
+            case(3)
+              write(1, '(es12.4)') flw % w % com(c)
+            case(4)
+              write(1, '(es12.4)') flw % t % com(c)
+          end select
         end do
       end do    ! through variables
     end if
@@ -145,19 +147,17 @@
           case(4)  
             write(1, '(a,i6,a)') 'raw-T  1', msh % n_cells, ' float'
         end select
-        do k = 1, msh % nz - 1
-          do j = 1, msh % ny - 1
-            select case(var)
-              case(1) 
-                write(1, '(es12.4)') flw % u % raw(At(j,k))
-              case(2) 
-                write(1, '(es12.4)') flw % v % raw(At(j,k))
-              case(3) 
-                write(1, '(es12.4)') flw % w % raw(At(j,k))
-              case(4) 
-                write(1, '(es12.4)') flw % t % raw(At(j,k))
-            end select
-          end do
+        do c = 1, msh % n_cells
+          select case(var)
+            case(1)
+              write(1, '(es12.4)') flw % u % raw(c)
+            case(2)
+              write(1, '(es12.4)') flw % v % raw(c)
+            case(3)
+              write(1, '(es12.4)') flw % w % raw(c)
+            case(4)
+              write(1, '(es12.4)') flw % t % raw(c)
+          end select
         end do
       end do    ! through variables
     end if    ! if(raw)
@@ -199,39 +199,37 @@
           case(14)
             write(1, '(a,i6,a)') 'avg-WT  1', msh % n_cells, ' float'
         end select
-        do k = 1, msh % nz - 1
-          do j = 1, msh % ny - 1
-            select case(var)
-              case(1)
-                write(1, '(es12.4)') flw % u_avg % com(At(j,k))
-              case(2)
-                write(1, '(es12.4)') flw % v_avg % com(At(j,k))
-              case(3)
-                write(1, '(es12.4)') flw % w_avg % com(At(j,k))
-              case(4)
-                write(1, '(es12.4)') flw % t_avg % com(At(j,k))
-              case(5)
-                write(1, '(es12.4)') flw % uu_avg % com(At(j,k))
-              case(6)
-                write(1, '(es12.4)') flw % vv_avg % com(At(j,k))
-              case(7)
-                write(1, '(es12.4)') flw % ww_avg % com(At(j,k))
-              case(8)
-                write(1, '(es12.4)') flw % uv_avg % com(At(j,k))
-              case(9)
-                write(1, '(es12.4)') flw % uw_avg % com(At(j,k))
-              case(10)
-                write(1, '(es12.4)') flw % vw_avg % com(At(j,k))
-              case(11)
-                write(1, '(es12.4)') flw % tt_avg % com(At(j,k))
-              case(12)
-                write(1, '(es12.4)') flw % ut_avg % com(At(j,k))
-              case(13)
-                write(1, '(es12.4)') flw % vt_avg % com(At(j,k))
-              case(14)
-                write(1, '(es12.4)') flw % wt_avg % com(At(j,k))
-            end select
-          end do
+        do c = 1, msh % n_cells
+          select case(var)
+            case(1)
+              write(1, '(es12.4)') flw % u_avg % com(c)
+            case(2)
+              write(1, '(es12.4)') flw % v_avg % com(c)
+            case(3)
+              write(1, '(es12.4)') flw % w_avg % com(c)
+            case(4)
+              write(1, '(es12.4)') flw % t_avg % com(c)
+            case(5)
+              write(1, '(es12.4)') flw % uu_avg % com(c)
+            case(6)
+              write(1, '(es12.4)') flw % vv_avg % com(c)
+            case(7)
+              write(1, '(es12.4)') flw % ww_avg % com(c)
+            case(8)
+              write(1, '(es12.4)') flw % uv_avg % com(c)
+            case(9)
+              write(1, '(es12.4)') flw % uw_avg % com(c)
+            case(10)
+              write(1, '(es12.4)') flw % vw_avg % com(c)
+            case(11)
+              write(1, '(es12.4)') flw % tt_avg % com(c)
+            case(12)
+              write(1, '(es12.4)') flw % ut_avg % com(c)
+            case(13)
+              write(1, '(es12.4)') flw % vt_avg % com(c)
+            case(14)
+              write(1, '(es12.4)') flw % wt_avg % com(c)
+          end select
         end do
       end do    ! through variables
     end if    ! if(avg)
@@ -273,39 +271,37 @@
           case(14)
             write(1, '(a,i6,a)') 'dns-WT  1', msh % n_cells, ' float'
         end select
-        do k = 1, msh % nz - 1
-          do j = 1, msh % ny - 1
-            select case(var)
-              case(1)
-                write(1, '(es12.4)') flw % u_avg % dns(At(j,k))
-              case(2)
-                write(1, '(es12.4)') flw % v_avg % dns(At(j,k))
-              case(3)
-                write(1, '(es12.4)') flw % w_avg % dns(At(j,k))
-              case(4)
-                write(1, '(es12.4)') flw % t_avg % dns(At(j,k))
-              case(5)
-                write(1, '(es12.4)') flw % uu_avg % dns(At(j,k))
-              case(6)
-                write(1, '(es12.4)') flw % vv_avg % dns(At(j,k))
-              case(7)
-                write(1, '(es12.4)') flw % ww_avg % dns(At(j,k))
-              case(8)
-                write(1, '(es12.4)') flw % uv_avg % dns(At(j,k))
-              case(9)
-                write(1, '(es12.4)') flw % uw_avg % dns(At(j,k))
-              case(10)
-                write(1, '(es12.4)') flw % vw_avg % dns(At(j,k))
-              case(11)
-                write(1, '(es12.4)') flw % tt_avg % dns(At(j,k))
-              case(12)
-                write(1, '(es12.4)') flw % ut_avg % dns(At(j,k))
-              case(13)
-                write(1, '(es12.4)') flw % vt_avg % dns(At(j,k))
-              case(14)
-                write(1, '(es12.4)') flw % wt_avg % dns(At(j,k))
-            end select
-          end do
+        do c = 1, msh % n_cells
+          select case(var)
+            case(1)
+              write(1, '(es12.4)') flw % u_avg % dns(c)
+            case(2)
+              write(1, '(es12.4)') flw % v_avg % dns(c)
+            case(3)
+              write(1, '(es12.4)') flw % w_avg % dns(c)
+            case(4)
+              write(1, '(es12.4)') flw % t_avg % dns(c)
+            case(5)
+              write(1, '(es12.4)') flw % uu_avg % dns(c)
+            case(6)
+              write(1, '(es12.4)') flw % vv_avg % dns(c)
+            case(7)
+              write(1, '(es12.4)') flw % ww_avg % dns(c)
+            case(8)
+              write(1, '(es12.4)') flw % uv_avg % dns(c)
+            case(9)
+              write(1, '(es12.4)') flw % uw_avg % dns(c)
+            case(10)
+              write(1, '(es12.4)') flw % vw_avg % dns(c)
+            case(11)
+              write(1, '(es12.4)') flw % tt_avg % dns(c)
+            case(12)
+              write(1, '(es12.4)') flw % ut_avg % dns(c)
+            case(13)
+              write(1, '(es12.4)') flw % vt_avg % dns(c)
+            case(14)
+              write(1, '(es12.4)') flw % wt_avg % dns(c)
+          end select
         end do
       end do    ! through variables
     end if    ! if(dns)
@@ -314,9 +310,5 @@
   write(1, '(a, i6)')  'POINT_DATA',  msh % n_nodes
 
   close(1)
-
-  contains
-
-  include 'At.f90'
 
   end subroutine

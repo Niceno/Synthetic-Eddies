@@ -13,7 +13,7 @@
   type(Flow_Type) :: flw
   integer         :: ts
 !-----------------------------------[Locals]-----------------------------------!
-  integer                 :: j, k
+  integer                 :: c
   type(Mesh_Type), target :: msh
 !==============================================================================!
 
@@ -23,78 +23,72 @@
   !------------------------------!
   !   Time average over domain   !
   !------------------------------!
-  do j = 1, msh % ny - 1
-    do k = 1, msh % nz - 1
+  do c = 1, msh % n_cells
 
-      ! Mean: u, v, w, t
-      flw % u_avg % com(At(j,k)) = (  flw % u_avg % com(At(j,k))*(ts-1)  &
-                                    + flw % u     % com(At(j,k))) / ts
-      flw % v_avg % com(At(j,k)) = (  flw % v_avg % com(At(j,k))*(ts-1)  &
-                                    + flw % v     % com(At(j,k))) / ts
-      flw % w_avg % com(At(j,k)) = (  flw % w_avg % com(At(j,k))*(ts-1)  &
-                                    + flw % w     % com(At(j,k))) / ts
-      flw % t_avg % com(At(j,k)) = (  flw % t_avg % com(At(j,k))*(ts-1)  &
-                                    + flw % t     % com(At(j,k))) / ts
+    ! Mean: u, v, w, t
+    flw % u_avg % com(c) = (  flw % u_avg % com(c)*(ts-1)    &
+                            + flw % u     % com(c)) / ts
+    flw % v_avg % com(c) = (  flw % v_avg % com(c)*(ts-1)    &
+                            + flw % v     % com(c)) / ts
+    flw % w_avg % com(c) = (  flw % w_avg % com(c)*(ts-1)    &
+                            + flw % w     % com(c)) / ts
+    flw % t_avg % com(c) = (  flw % t_avg % com(c)*(ts-1)    &
+                            + flw % t     % com(c)) / ts
 
-      ! Mean: uu, vv, ww, tt
-      flw % uu_avg % com(At(j,k)) = (   flw % uu_avg % com(At(j,k)) * (ts-1)   &
-                                     + (flw % u      % com(At(j,k))            &
-                                      - flw % u_avg  % dns(At(j,k)))**2  ) / ts
+    ! Mean: uu, vv, ww, tt
+    flw % uu_avg % com(c) = (   flw % uu_avg % com(c) * (ts-1)     &
+                             + (flw % u      % com(c)              &
+                              - flw % u_avg  % dns(c))**2  ) / ts
 
-      flw % vv_avg % com(At(j,k)) = (   flw % vv_avg % com(At(j,k)) * (ts-1)   &
-                                     + (flw % v      % com(At(j,k))            &
-                                     -  flw % v_avg  % dns(At(j,k)))**2  ) / ts
+    flw % vv_avg % com(c) = (   flw % vv_avg % com(c) * (ts-1)     &
+                             + (flw % v      % com(c)              &
+                             -  flw % v_avg  % dns(c))**2  ) / ts
 
-      flw % ww_avg % com(At(j,k)) = (   flw % ww_avg % com(At(j,k)) * (ts-1)   &
-                                     + (flw % w      % com(At(j,k))            &
-                                     -  flw % w_avg  % dns(At(j,k)))**2  ) / ts
+    flw % ww_avg % com(c) = (   flw % ww_avg % com(c) * (ts-1)     &
+                             + (flw % w      % com(c)              &
+                             -  flw % w_avg  % dns(c))**2  ) / ts
 
-      flw % tt_avg % com(At(j,k)) = (   flw % tt_avg % com(At(j,k)) * (ts-1)   &
-                                     + (flw % t      % com(At(j,k))            &
-                                      - flw % t_avg  % dns(At(j,k)))**2  ) / ts
+    flw % tt_avg % com(c) = (   flw % tt_avg % com(c) * (ts-1)     &
+                             + (flw % t      % com(c)              &
+                              - flw % t_avg  % dns(c))**2  ) / ts
 
-      ! Mean: uv, uw, vw
-      flw % uv_avg % com(At(j,k)) = (    flw % uv_avg % com(At(j,k)) * (ts-1)  &
-                                  + (   (flw % u      % com(At(j,k))           &
-                                       - flw % u_avg  % dns(At(j,k)))          &
-                                      * (flw % v      % com(At(j,k))           &
-                                       - flw % v_avg  % dns(At(j,k))) ) ) / ts
+    ! Mean: uv, uw, vw
+    flw % uv_avg % com(c) = (    flw % uv_avg % com(c) * (ts-1)    &
+                          + (   (flw % u      % com(c)             &
+                               - flw % u_avg  % dns(c))            &
+                              * (flw % v      % com(c)             &
+                               - flw % v_avg  % dns(c)) ) ) / ts
 
-      flw % uw_avg % com(At(j,k)) = (    flw % uw_avg % com(At(j,k)) * (ts-1)  &
-                                  + (   (flw % u      % com(At(j,k))           &
-                                       - flw % u_avg  % dns(At(j,k)))          &
-                                      * (flw % w      % com(At(j,k))           &
-                                       - flw % w_avg  % dns(At(j,k))) ) ) / ts
+    flw % uw_avg % com(c) = (    flw % uw_avg % com(c) * (ts-1)    &
+                          + (   (flw % u      % com(c)             &
+                               - flw % u_avg  % dns(c))            &
+                              * (flw % w      % com(c)             &
+                               - flw % w_avg  % dns(c)) ) ) / ts
 
-      flw % vw_avg % com(At(j,k)) = (    flw % vw_avg % com(At(j,k)) * (ts-1)  &
-                                  + (   (flw % v      % com(At(j,k))           &
-                                       - flw % v_avg  % dns(At(j,k)))          &
-                                      * (flw % w      % com(At(j,k))           &
-                                       - flw % w_avg  % dns(At(j,k))) ) ) / ts
+    flw % vw_avg % com(c) = (    flw % vw_avg % com(c) * (ts-1)    &
+                          + (   (flw % v      % com(c)             &
+                               - flw % v_avg  % dns(c))            &
+                              * (flw % w      % com(c)             &
+                               - flw % w_avg  % dns(c)) ) ) / ts
 
-      ! Mean: ut, vt, wt
-      flw % ut_avg % com(At(j,k)) = (    flw % ut_avg % com(At(j,k)) * (ts-1)  &
-                                  + (   (flw % u      % com(At(j,k))           &
-                                       - flw % u_avg  % dns(At(j,k)))          &
-                                      * (flw % t      % com(At(j,k))           &
-                                       - flw % t_avg  % dns(At(j,k))) ) ) / ts
+    ! Mean: ut, vt, wt
+    flw % ut_avg % com(c) = (    flw % ut_avg % com(c) * (ts-1)    &
+                          + (   (flw % u      % com(c)             &
+                               - flw % u_avg  % dns(c))            &
+                              * (flw % t      % com(c)             &
+                               - flw % t_avg  % dns(c)) ) ) / ts
 
-      flw % vt_avg % com(At(j,k)) = (    flw % vt_avg % com(At(j,k)) * (ts-1)  &
-                                  + (   (flw % v      % com(At(j,k))           &
-                                       - flw % v_avg  % dns(At(j,k)))          &
-                                      * (flw % t      % com(At(j,k))           &
-                                       - flw % t_avg  % dns(At(j,k))) ) ) / ts
+    flw % vt_avg % com(c) = (    flw % vt_avg % com(c) * (ts-1)    &
+                          + (   (flw % v      % com(c)             &
+                               - flw % v_avg  % dns(c))            &
+                              * (flw % t      % com(c)             &
+                               - flw % t_avg  % dns(c)) ) ) / ts
 
-      flw % wt_avg % com(At(j,k)) = (    flw % wt_avg % com(At(j,k)) * (ts-1)  &
-                                  + (   (flw % w      % com(At(j,k))           &
-                                       - flw % w_avg  % dns(At(j,k)))          &
-                                      * (flw % t      % com(At(j,k))           &
-                                       - flw % t_avg  % dns(At(j,k))) ) ) / ts
-    end do
+    flw % wt_avg % com(c) = (    flw % wt_avg % com(c) * (ts-1)    &
+                          + (   (flw % w      % com(c)             &
+                               - flw % w_avg  % dns(c))            &
+                              * (flw % t      % com(c)             &
+                               - flw % t_avg  % dns(c)) ) ) / ts
   end do
-
-  contains
-
-  include 'At.f90'
 
   end subroutine
