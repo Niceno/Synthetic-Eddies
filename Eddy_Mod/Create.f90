@@ -13,7 +13,7 @@
   integer         :: n
   real            :: sig
 !-----------------------------------[Locals]-----------------------------------!
-  integer           :: e
+  integer           :: e, random_cell
   real              :: y_s, y_e, z_s, z_e
   real, allocatable :: int_x(:), int_y(:),  &
                        int_z(:), int_t(:)
@@ -59,8 +59,10 @@
 
     call random_number(tmp)
     ed % x(e) = -ed % sigma + 2 * ed % sigma * tmp(1)
-    ed % y(e) = y_s + (y_e-y_s)*tmp(2)
-    ed % z(e) = z_s + (z_e-z_s)*tmp(3)
+
+    random_cell = int( tmp(2) * real(msh % n_cells) )
+    ed % y(e) = msh % yc(random_cell)
+    ed % z(e) = msh % zc(random_cell)
 
     ed % x_int(e) = sign(1.0,int_x(e)-0.5)
     ed % y_int(e) = sign(1.0,int_y(e)-0.5)
