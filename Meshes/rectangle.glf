@@ -92,6 +92,29 @@ Delnov_Create_Structured_Domain "span-1" "norm-1" "span-2" "norm-2"
 #----------------------------------------
 Delnov_Mirror_Entities_By_Name_Pattern "dom" "y"
 
+#-----------------------------#
+#                             #
+# Specify boundary conditions #
+#                             #
+#-----------------------------#
+Delnov_Introduce_Bnd_Conds [list "WALL" "PERIODIC"]
+
+set bc [pw::BoundaryCondition getByName "WALL"]
+$bc apply [list [list [pw::GridEntity getByName "dom-1" ]    \
+                      [pw::GridEntity getByName "span-2"]]]
+$bc apply [list [list [pw::GridEntity getByName "dom-2" ]    \
+                      [pw::GridEntity getByName "span-4"]]]
+
+set bc [pw::BoundaryCondition getByName "PERIODIC"]
+$bc apply [list [list [pw::GridEntity getByName "dom-1" ]    \
+                      [pw::GridEntity getByName "norm-1"]]   \
+                [list [pw::GridEntity getByName "dom-1" ]    \
+                      [pw::GridEntity getByName "norm-2"]]]
+$bc apply [list [list [pw::GridEntity getByName "dom-2" ]    \
+                      [pw::GridEntity getByName "norm-3"]]   \
+                [list [pw::GridEntity getByName "dom-2" ]    \
+                      [pw::GridEntity getByName "norm-4"]]]
+
 #--------------------------
 #
 # Export data for analysis

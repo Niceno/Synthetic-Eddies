@@ -122,8 +122,8 @@ Delnov_Create_Line_From_Points_Name "point-6" "point-8" "bndlay-2"
 #----------------------------
 # Two arcs to wrap things up
 #----------------------------
-Delnov_Create_Arc_Name "point-5" "point-6" $X_0 $Y_0 $Z_0 "circle-inn"
-Delnov_Create_Arc_Name "point-7" "point-8" $X_0 $Y_0 $Z_0 "circle-out"
+Delnov_Create_Arc_Name "point-5" "point-6" $X_0 $Y_0 $Z_0 "circle-inn-1"
+Delnov_Create_Arc_Name "point-7" "point-8" $X_0 $Y_0 $Z_0 "circle-out-1"
 
 #----------------------------------------
 # Handle resolutions and grid stretching
@@ -159,16 +159,41 @@ Delnov_Set_Dimension $azym_only [expr $N_CORE + $N_CORE - 1]
 #---------------------------------
 # Create domains by edge assembly
 #---------------------------------
-Delnov_Create_Structured_Domain "core-1" "core-2" "core-3" "core-4"
-Delnov_Create_Structured_Domain "inner-1" "circle-inn" "inner-2"  \
+Delnov_Create_Structured_Domain "core-1"  \
+                                "core-2"  \
+                                "core-3"  \
+                                "core-4"
+Delnov_Create_Structured_Domain "inner-1"                  \
+                                "circle-inn-1"             \
+                                 "inner-2"                 \
                                  [list "core-3" "core-2"]
-Delnov_Create_Structured_Domain "bndlay-1" "circle-out" "bndlay-2" "circle-inn"
+Delnov_Create_Structured_Domain "bndlay-1"      \
+                                "circle-out-1"  \
+                                "bndlay-2"      \
+                                "circle-inn-1"
 
 #---------------------------------------
 # Copy them around to get a full circle
 #---------------------------------------
 Delnov_Mirror_Entities_By_Name_Pattern "dom" "x"
 Delnov_Mirror_Entities_By_Name_Pattern "dom" "y"
+
+#-----------------------------#
+#                             #
+# Specify boundary conditions #
+#                             #
+#-----------------------------#
+Delnov_Introduce_Bnd_Conds [list "WALL" "PERIODIC"]
+
+set bc [pw::BoundaryCondition getByName "WALL"]
+$bc apply [list [list [pw::GridEntity getByName "dom-3" ]          \
+                      [pw::GridEntity getByName "circle-out-1"]]   \
+                [list [pw::GridEntity getByName "dom-6" ]          \
+                      [pw::GridEntity getByName "circle-out-2"]]   \
+                [list [pw::GridEntity getByName "dom-9" ]          \
+                      [pw::GridEntity getByName "circle-out-3"]]   \
+                [list [pw::GridEntity getByName "dom-12" ]         \
+                      [pw::GridEntity getByName "circle-out-4"]]]
 
 #--------------------------
 #
